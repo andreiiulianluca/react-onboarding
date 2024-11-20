@@ -1,22 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
-import Card from "./componentes/Card/Card";
 import Navbar from "./componentes/Navbar/Navbar";
 import InfiniteScroll from "./componentes/InfiniteScroll/InfiniteScroll";
+import Filter from "./componentes/Filter/Filter";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home";
 
-function App() {
-  const [pageNumber, setPageNumber] = useState<Number>(1);
-  const [searchValue, setSearchValue] = useState<String>("");
-
+const App = () => {
   return (
-    <div className="App">
-      <Navbar setSearch={setSearchValue} updatePageNumber={setPageNumber} />
-      <div className="flex container mx-auto px-4">
-        <p>Filter component will be placed here</p>
-        <InfiniteScroll />
+    <Router>
+      <div className="App">
+        <Navbar />
       </div>
-    </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {/* <Route path="/:id" element={<CardDetails />} />
+
+        <Route path="/episodes" element={<Episodes />} />
+        <Route path="/episodes/:id" element={<CardDetails />} />
+
+        <Route path="/location" element={<Location />} />
+        <Route path="/location/:id" element={<CardDetails />} /> */}
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
