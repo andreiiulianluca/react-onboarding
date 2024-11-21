@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import FilterButton from "../FilterButton";
-import GenderProps from "./GenderProps";
 
-const Gender: React.FC<GenderProps> = ({ updateGender, updatePageNumber }) => {
+import { setGender } from "../../../features/filterSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import { FilterButtonType } from "../FilterProps";
+
+const Gender: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const genders = ["female", "male", "genderless", "unknown"];
+  const gender = useSelector((state: RootState) => state.filter.gender);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
@@ -34,11 +39,10 @@ const Gender: React.FC<GenderProps> = ({ updateGender, updatePageNumber }) => {
           <div className="flex flex-wrap gap-3">
             {genders.map((item, index) => (
               <FilterButton
-                name="status"
-                task={updateGender}
-                updatePageNumber={updatePageNumber}
+                key={index}
+                type={FilterButtonType.GENDER}
+                action={setGender}
                 input={item}
-                index={index}
               />
             ))}
           </div>

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import FilterButton from "../FilterButton";
-import StatusProps from "./StatusProps";
+import { setStatus } from "../../../features/filterSlice";
+import { FilterButtonType } from "../FilterProps";
 
-const Status: React.FC<StatusProps> = ({ updateStatus, updatePageNumber }) => {
+const Status: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const status = ["Alive", "Dead", "Unknown"];
 
@@ -35,12 +36,10 @@ const Status: React.FC<StatusProps> = ({ updateStatus, updatePageNumber }) => {
           <div className="flex flex-wrap gap-3">
             {status.map((item, index) => (
               <FilterButton
+                type={FilterButtonType.STATUS}
                 key={index}
-                name="status"
-                task={updateStatus}
-                updatePageNumber={updatePageNumber}
+                action={setStatus}
                 input={item}
-                index={index}
               />
             ))}
           </div>

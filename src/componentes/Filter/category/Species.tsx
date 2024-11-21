@@ -1,11 +1,9 @@
 import { useState } from "react";
 import FilterButton from "../FilterButton";
-import SpeciesProps from "./SpeciesProps";
+import { setSpecies } from "../../../features/filterSlice";
+import { FilterButtonType } from "../FilterProps";
 
-const Species: React.FC<SpeciesProps> = ({
-  updateSpecies,
-  updatePageNumber,
-}) => {
+const Species: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   let species = [
@@ -50,11 +48,10 @@ const Species: React.FC<SpeciesProps> = ({
           <div className="flex flex-wrap gap-3">
             {species.map((item, index) => (
               <FilterButton
-                name="status"
-                task={updateSpecies}
-                updatePageNumber={updatePageNumber}
+                key={index}
+                type={FilterButtonType.SPECIES}
+                action={setSpecies}
                 input={item}
-                index={index}
               />
             ))}
           </div>

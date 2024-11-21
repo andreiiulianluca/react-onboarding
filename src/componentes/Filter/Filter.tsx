@@ -1,19 +1,18 @@
 import Gender from "./category/Gender";
 import Species from "./category/Species";
 import Status from "./category/Status";
-import FilterProps from "./FilterProps";
+import { resetFilter } from "../../features/filterSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { fetchCharacters, resetData } from "../../features/infiniteScrollSlice";
 
-const Filter: React.FC<FilterProps> = ({
-  updatePageNumber,
-  updateStatus,
-  updateGender,
-  updateSpecies,
-}) => {
-  const clearFilters = () => {
-    updateStatus("");
-    updateGender("");
-    updateSpecies("");
-    updatePageNumber(1);
+const Filter: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleClick = () => {
+    dispatch(resetFilter());
+    dispatch(resetData());
+    dispatch(fetchCharacters());
   };
 
   return (
@@ -21,26 +20,16 @@ const Filter: React.FC<FilterProps> = ({
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-bold text-gray-700">Filters</h2>
         <button
-          onClick={clearFilters}
+          onClick={() => handleClick()}
           className="text-sm bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded"
         >
           Clear
         </button>
       </div>
-
       <div className="accordion space-y-4">
-        <Status
-          updatePageNumber={updatePageNumber}
-          updateStatus={updateStatus}
-        />
-        <Species
-          updatePageNumber={updatePageNumber}
-          updateSpecies={updateSpecies}
-        />
-        <Gender
-          updatePageNumber={updatePageNumber}
-          updateGender={updateGender}
-        />
+        <Status />
+        <Species />
+        <Gender />
       </div>
     </div>
   );
