@@ -3,7 +3,7 @@ import styles from "./Filter.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { setPageNumber } from "../../features/searchSlice";
-import { resetData, fetchCharacters } from "../../features/infiniteScrollSlice";
+import { resetData, fetchCharacters } from "../../features/charactersSlice";
 
 interface FilterButtonProps {
   key: number;

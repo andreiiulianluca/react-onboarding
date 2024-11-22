@@ -1,7 +1,7 @@
 import CardProp from "./CardProps";
 import styles from "./Card.module.scss";
 
-const Card = ({ id, image, name, location, status }: CardProp) => {
+const Card: React.FC<CardProp> = ({ id, image, name, location, status }) => {
   if (!id) {
     return <div>No data available</div>;
   }
@@ -19,11 +19,9 @@ const Card = ({ id, image, name, location, status }: CardProp) => {
 
   return (
     <div
-      key={id}
       className={`${styles.card} max-w-sm rounded overflow-hidden shadow-lg bg-white w-64 max-h-64 relative`}
     >
       <div className={`${styles.badge} ${badgeClass}`}>{status}</div>
-
       <img
         src={image}
         alt={name}
@@ -31,7 +29,7 @@ const Card = ({ id, image, name, location, status }: CardProp) => {
       />
       <div className="px-4 py-2">
         <h5 className="font-semibold text-lg">{name}</h5>
-        <p className="text-gray-600">{location.name}</p>
+        <p className="text-gray-600">{location?.name || "Unknown Location"}</p>
       </div>
     </div>
   );

@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import FilterButton from "../FilterButton";
-
 import { setGender } from "../../../features/filterSlice";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
 import { FilterButtonType } from "../FilterProps";
 
 const Gender: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const genders = ["female", "male", "genderless", "unknown"];
-  const gender = useSelector((state: RootState) => state.filter.gender);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);

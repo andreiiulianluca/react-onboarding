@@ -1,10 +1,9 @@
-import { useState } from "react";
 import "./App.css";
 import Navbar from "./componentes/Navbar/Navbar";
-import InfiniteScroll from "./componentes/InfiniteScroll/InfiniteScroll";
-import Filter from "./componentes/Filter/Filter";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./Pages/Home";
+import Characters from "./Pages/Characters";
+import Episodes from "./Pages/Episodes";
+import Location from "./Pages/Location";
 
 const App = () => {
   return (
@@ -13,13 +12,13 @@ const App = () => {
         <Navbar />
       </div>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Characters />} />
+        <Route path="/episodes" element={<Episodes />} />
+        <Route path="/location" element={<Location />} />
         {/* <Route path="/:id" element={<CardDetails />} />
 
-        <Route path="/episodes" element={<Episodes />} />
         <Route path="/episodes/:id" element={<CardDetails />} />
 
-        <Route path="/location" element={<Location />} />
         <Route path="/location/:id" element={<CardDetails />} /> */}
       </Routes>
     </Router>

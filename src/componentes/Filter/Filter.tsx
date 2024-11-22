@@ -4,7 +4,7 @@ import Status from "./category/Status";
 import { resetFilter } from "../../features/filterSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
-import { fetchCharacters, resetData } from "../../features/infiniteScrollSlice";
+import { fetchCharacters, resetData } from "../../features/charactersSlice";
 
 const Filter: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -2,67 +2,74 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { FilterState } from "./filterSlice";
 import { SearchState } from "./searchSlice";
 
-type FetchedData = {
+type Character = {
+  id: number;
+  name: string;
+  image: string;
+  status: string;
+  location: { name: string; url: string };
+};
+
+type FetchedCharactersData = {
   info: {
     count: number;
     pages: number;
     next: string | null;
     prev: string | null;
   };
-  results: {
-    id: number;
-    name: string;
-    image: string;
-    status: string;
-    location: { name: string; url: string };
-  }[];
+  results: Character[];
 };
 
-type InfiniteScrollState = {
-  data: FetchedData | null;
+type CharactersState = {
+  data: FetchedCharactersData | null;
   isLoading: boolean;
   error: string | null;
   pageNumber: number;
-  search: string;
 };
 
-const initialState: InfiniteScrollState = {
+const initialState: CharactersState = {
   data: null,
   isLoading: false,
   error: null,
   pageNumber: 1,
-  search: "",
 };
 
 export const fetchCharacters = createAsyncThunk<
-  FetchedData,
+  FetchedCharactersData,
   void,
   {
     state: {
-      infiniteScroll: InfiniteScrollState;
+      characters: CharactersState;
       filter: FilterState;
       search: SearchState;
     };
   }
->("infiniteScroll/fetchCharacters", async (_, { getState }) => {
-  const { pageNumber } = getState().infiniteScroll;
+>("characters/fetchCharacters", async (_, { getState }) => {
+  const { pageNumber } = getState().characters;
   const { search } = getState().search;
   const { status, gender, species } = getState().filter;
 
   const response = await fetch(
     `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`
   );
-  if (!response.ok) throw new Error("Failed to fetch data");
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
   return response.json();
 });
 
-const infiniteScrollSlice = createSlice({
-  name: "infiniteScroll",
+const charactersSlice = createSlice({
+  name: "characters",
   initialState,
   reducers: {
     resetData(state) {
       state.data = null;
       state.pageNumber = 1;
+    },
+    incrementPageNumber(state) {
+      state.pageNumber = state.pageNumber + 1;
     },
   },
   extraReducers: (builder) => {
@@ -88,5 +95,5 @@ const infiniteScrollSlice = createSlice({
   },
 });
 
-export const { resetData } = infiniteScrollSlice.actions;
-export default infiniteScrollSlice.reducer;
+export const { resetData, incrementPageNumber } = charactersSlice.actions;
+export default charactersSlice.reducer;

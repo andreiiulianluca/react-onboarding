@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
-import { resetData, fetchCharacters } from "../../features/infiniteScrollSlice";
+import { resetData, fetchCharacters } from "../../features/charactersSlice";
 import { setSearch } from "../../features/searchSlice";
 import { NavLink } from "react-router-dom";
 
@@ -31,7 +31,6 @@ const Navbar: React.FC = () => {
           type="text"
         />
       </div>
-
       <div className="flex gap-8">
         <NavLink
           to="/"
