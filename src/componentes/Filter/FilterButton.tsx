@@ -1,20 +1,11 @@
-import React from "react";
 import styles from "./Filter.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { setPageNumber } from "../../features/searchSlice";
 import { resetData, fetchCharacters } from "../../features/charactersSlice";
+import FilterButtonProps from "./FilterButtonProps";
 
-interface FilterButtonProps {
-  key: number;
-  type: string;
-  input: string;
-  action: (
-    input: string
-  ) => { type: string; payload: any } | ((dispatch: AppDispatch) => void);
-}
-
-const FilterButton: React.FC<FilterButtonProps> = ({ type, input, action }) => {
+const FilterButton = ({ type, input, action }: FilterButtonProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const filters = useSelector((state: RootState) => state.filter);
   const { gender, status, species } = filters;

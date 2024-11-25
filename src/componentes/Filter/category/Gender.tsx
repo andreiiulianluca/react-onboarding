@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import FilterButton from "../FilterButton";
+import { useState } from "react";
 import { setGender } from "../../../features/filterSlice";
 import { FilterButtonType } from "../FilterProps";
+import FilterButton from "./../FilterButton";
+import filterOptions from "./constants";
 
-const Gender: React.FC = () => {
+const Gender = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const genders = ["female", "male", "genderless", "unknown"];
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
@@ -33,7 +33,7 @@ const Gender: React.FC = () => {
       >
         <div className="accordion-body p-4 transition-transform">
           <div className="flex flex-wrap gap-3">
-            {genders.map((item, index) => (
+            {filterOptions.genders.map((item, index) => (
               <FilterButton
                 key={index}
                 type={FilterButtonType.GENDER}

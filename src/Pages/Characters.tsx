@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import Filter from "../componentes/Filter/Filter";
-import CardContainer, {
-  ScrollTypes,
-} from "../componentes/CardContainer/CardContainer";
+import CardContainer from "../componentes/CardContainer/CardContainer";
+import { ScrollTypes } from "../componentes/CardContainer/CardContainerProps";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { fetchCharacters, resetData } from "../features/charactersSlice";
@@ -23,6 +22,7 @@ const Characters = () => {
     <div className="flex container mx-auto px-4">
       <Filter />
       <CardContainer
+        page="/character/"
         type={ScrollTypes.INFINITY}
         characters={data?.results || []}
         action={() => dispatch(fetchCharacters())}

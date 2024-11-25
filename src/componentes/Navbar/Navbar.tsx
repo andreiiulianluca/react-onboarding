@@ -4,8 +4,9 @@ import { AppDispatch } from "../../store";
 import { resetData, fetchCharacters } from "../../features/charactersSlice";
 import { setSearch } from "../../features/searchSlice";
 import { NavLink } from "react-router-dom";
+import NavbarProps from "./NavbarProps";
 
-const Navbar: React.FC = () => {
+const Navbar = ({ displaySearch }: NavbarProps) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,14 +23,15 @@ const Navbar: React.FC = () => {
           Characters
         </NavLink>
       </h1>
-
       <div className="relative w-1/3">
-        <input
-          onChange={handleSearch}
-          placeholder="Search for characters"
-          className="w-full px-4 py-2 text-lg rounded-md border-2 border-sky-300 focus:outline-none focus:ring-2 focus:ring-sky-500"
-          type="text"
-        />
+        {!displaySearch && (
+          <input
+            onChange={handleSearch}
+            placeholder="Search for characters"
+            className="w-full px-4 py-2 text-lg rounded-md border-2 border-sky-300 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            type="text"
+          />
+        )}
       </div>
       <div className="flex gap-8">
         <NavLink

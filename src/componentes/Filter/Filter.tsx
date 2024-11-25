@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { fetchCharacters, resetData } from "../../features/charactersSlice";
 
-const Filter: React.FC = () => {
+const Filter = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleClick = () => {

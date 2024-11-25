@@ -1,34 +1,18 @@
-import React, { useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import Card from "../Card/Card";
 import { AppDispatch } from "../../store";
 import { incrementPageNumber } from "../../features/charactersSlice";
+import { ScrollTypes, CardContainerProps } from "./CardContainerProps";
 
-export enum ScrollTypes {
-  NORMAL = "normal",
-  INFINITY = "infinity",
-}
-interface CardContainerProps {
-  type: ScrollTypes;
-  characters: {
-    id: number;
-    image: string;
-    name: string;
-    location: { name: string; url: string };
-    status: string;
-  }[];
-  isLoading: boolean;
-  error: string | null;
-  action: any;
-}
-
-const CardContainer: React.FC<CardContainerProps> = ({
+const CardContainer = ({
+  page,
   type = ScrollTypes.NORMAL,
   characters,
   isLoading,
   error,
   action,
-}) => {
+}: CardContainerProps) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleScroll = useCallback(() => {
@@ -54,6 +38,7 @@ const CardContainer: React.FC<CardContainerProps> = ({
       {characters
         ? characters.map((character) => (
             <Card
+              page={page}
               key={character.id}
               id={character.id}
               image={character.image}
@@ -63,8 +48,10 @@ const CardContainer: React.FC<CardContainerProps> = ({
             />
           ))
         : !isLoading && <div className="m-auto">No results found</div>}
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
+      {isLoading && <div className="text-center mt-5">Loading...</div>}
+      {error && (
+        <div className="text-center mt-5 text-red-500">Error: {error}</div>
+      )}
     </div>
   );
 };

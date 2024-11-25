@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import FilterButton from "../FilterButton";
+import { useState } from "react";
 import { setStatus } from "../../../features/filterSlice";
 import { FilterButtonType } from "../FilterProps";
+import FilterButton from "../FilterButton";
+import filterOptions from "./constants";
 
-const Status: React.FC = () => {
+const Status = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const status = ["Alive", "Dead", "Unknown"];
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
@@ -34,7 +34,7 @@ const Status: React.FC = () => {
       >
         <div className="accordion-body p-4">
           <div className="flex flex-wrap gap-3">
-            {status.map((item, index) => (
+            {filterOptions.status.map((item, index) => (
               <FilterButton
                 type={FilterButtonType.STATUS}
                 key={index}

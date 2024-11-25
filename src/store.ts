@@ -4,11 +4,13 @@ import charactersReducer from "./features/charactersSlice";
 import filterReducer from "./features/filterSlice";
 import locationReducer from "./features/locationSlice";
 import episodeReducer from "./features/episodeSlice";
+import characterDetailsReducer from "./features/characterDetailsSlice";
 
 const store = configureStore({
   reducer: {
     search: searchReducer,
     characters: charactersReducer,
+    characterDetail: characterDetailsReducer,
     filter: filterReducer,
     location: locationReducer,
     episode: episodeReducer,

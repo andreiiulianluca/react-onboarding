@@ -2,23 +2,10 @@ import { useState } from "react";
 import FilterButton from "../FilterButton";
 import { setSpecies } from "../../../features/filterSlice";
 import { FilterButtonType } from "../FilterProps";
+import filterOptions from "./constants";
 
-const Species: React.FC = () => {
+const Species = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  let species = [
-    "Human",
-    "Alien",
-    "Humanoid",
-    "Poopybutthole",
-    "Mythological",
-    "Unknown",
-    "Animal",
-    "Disease",
-    "Robot",
-    "Cronenberg",
-    "Planet",
-  ];
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
@@ -46,7 +33,7 @@ const Species: React.FC = () => {
       >
         <div className="accordion-body p-4 transition-transform">
           <div className="flex flex-wrap gap-3">
-            {species.map((item, index) => (
+            {filterOptions.species.map((item, index) => (
               <FilterButton
                 key={index}
                 type={FilterButtonType.SPECIES}
