@@ -1,9 +1,10 @@
 import styles from "./Filter.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store";
-import { setPageNumber } from "../../features/searchSlice";
-import { resetData, fetchCharacters } from "../../features/charactersSlice";
+import { setPageNumber } from "../../store/slices/search/slice";
+import { fetchCharacters } from "../../store/slices/characters/thunk";
+import { resetData } from "../../store/slices/characters/slice";
 import FilterButtonProps from "./FilterButtonProps";
+import { AppDispatch, RootState } from "../../store";
 
 const FilterButton = ({ type, input, action }: FilterButtonProps) => {
   const dispatch = useDispatch<AppDispatch>();

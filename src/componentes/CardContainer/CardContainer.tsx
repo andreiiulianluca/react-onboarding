@@ -1,13 +1,13 @@
-import { useEffect, useCallback } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import Card from "../Card/Card";
+import { CardContainerProps } from "./CardContainerProps";
 import { AppDispatch } from "../../store";
-import { incrementPageNumber } from "../../features/charactersSlice";
-import { ScrollTypes, CardContainerProps } from "./CardContainerProps";
+import { incrementPageNumber } from "../../store/slices/characters/slice";
+import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 
 const CardContainer = ({
-  page,
-  type = ScrollTypes.NORMAL,
+  type = "normal",
   characters,
   isLoading,
   error,
@@ -15,30 +15,20 @@ const CardContainer = ({
 }: CardContainerProps) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleScroll = useCallback(() => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 100 &&
-      !isLoading
-    ) {
-      if (type === ScrollTypes.INFINITY) {
-        dispatch(incrementPageNumber());
-        dispatch(action);
-      }
+  const loadMore = () => {
+    if (type === "infinity") {
+      dispatch(incrementPageNumber());
+      dispatch(action);
     }
-  }, [dispatch, action, type, isLoading]);
+  };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+  useInfiniteScroll({ isLoading, onLoadMore: loadMore });
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 place-items-center">
       {characters
         ? characters.map((character) => (
             <Card
-              page={page}
               key={character.id}
               id={character.id}
               image={character.image}

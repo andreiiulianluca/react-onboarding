@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-type FetchedCharacterDetailsData = {
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchCharacterDetails } from "./thunks";
+export type FetchedCharacterDetailsData = {
   id: number;
   name: string;
   image: string;
@@ -22,21 +22,6 @@ const initialState: CharacterDetailsState = {
   isLoading: false,
   error: null,
 };
-
-export const fetchCharacterDetails = createAsyncThunk<
-  FetchedCharacterDetailsData,
-  string | undefined
->("characters/fetchCharactersDetails", async (characterId) => {
-  const response = await fetch(
-    `https://rickandmortyapi.com/api/character/${characterId}`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch character details");
-  }
-
-  return response.json();
-});
 
 const characterDetailsSlice = createSlice({
   name: "characterDetails",

@@ -7,8 +7,4 @@ export interface FilterProps {
   updateSpecies: (species: string) => void;
 }
 
-export enum FilterButtonType {
-  GENDER = "gender",
-  SPECIES = "species",
-  STATUS = "status",
-}
+export type FilterButtonType = "gender" | "species" | "status";

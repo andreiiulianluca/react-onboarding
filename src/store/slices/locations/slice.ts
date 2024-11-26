@@ -1,4 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchCharactersPerLocation } from "./thunk";
 
 type Character = {
   id: number;
@@ -32,41 +33,6 @@ const initialState: LocationState = {
   isLoading: false,
   error: null,
 };
-
-export const fetchCharactersPerLocation = createAsyncThunk<
-  FetchedLocationData,
-  number
->("location/fetchCharactersPerLocation", async (locationId) => {
-  const response = await fetch(
-    `https://rickandmortyapi.com/api/location/${locationId}`
-  );
-
-  if (!response.ok) throw new Error("Failed to fetch location data");
-
-  const locationData = await response.json();
-
-  const characterPromises = locationData.residents.map((residentUrl: string) =>
-    fetch(residentUrl).then((res) => {
-      if (!res.ok) throw new Error("Failed to fetch character data");
-      return res.json();
-    })
-  );
-
-  const residents = await Promise.all(characterPromises);
-
-  return {
-    info: {
-      count: residents.length,
-      pages: 1,
-      next: null,
-      prev: null,
-    },
-    characters: residents,
-    location_name: locationData.name,
-    dimension: locationData.dimension,
-    type: locationData.type,
-  };
-});
 
 const locationsSlice = createSlice({
   name: "locationsSlice",

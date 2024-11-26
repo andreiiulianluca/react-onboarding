@@ -1,5 +1,4 @@
 export default interface CardProp {
-  page: string;
   id: number;
   name: string;
   image: string;

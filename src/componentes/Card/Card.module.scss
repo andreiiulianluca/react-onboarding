@@ -1,27 +1,65 @@
 $radius: 10px;
+$hover-border-color: #0b5ed7;
+$badge-red: #dc2626;
+$badge-green: #16a34a;
+$badge-gray: #71717a;
+
 .card {
   position: relative;
-  &:hover {
-    border: 2px solid #0b5ed7;
-  }
-  border: 2px solid white;
-  transition: border-color 0.3s ease;
+  width: 16rem;
+  height: 16rem;
   border-radius: $radius;
-}
-.content {
-  padding: 10px;
-}
-.img {
-  border-radius: $radius $radius 0 0;
-}
+  background-color: #ffffff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: border-color 0.5s ease;
 
-.badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 5px 10px;
-  border-radius: 12px;
-  color: white;
-  font-size: 0.875rem;
-  z-index: 10;
+  &:hover {
+    border: 1px solid $hover-border-color;
+  }
+
+  img {
+    width: 100%;
+    height: 12rem;
+    object-fit: cover;
+    border-radius: $radius $radius 0 0;
+  }
+
+  .badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 12px;
+    color: white;
+    font-size: 0.875rem;
+    z-index: 10;
+
+    &.bg-red-600 {
+      background-color: $badge-red;
+    }
+
+    &.bg-green-600 {
+      background-color: $badge-green;
+    }
+
+    &.bg-zinc-500 {
+      background-color: $badge-gray;
+    }
+  }
+
+  .content {
+    padding: 10px;
+    text-align: left;
+
+    h5 {
+      font-weight: 600;
+      font-size: 1.125rem;
+    }
+
+    p {
+      color: #4b5563;
+      font-size: 0.875rem;
+    }
+  }
 }

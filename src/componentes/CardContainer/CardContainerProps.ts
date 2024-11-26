@@ -1,11 +1,7 @@
-export enum ScrollTypes {
-  NORMAL = "normal",
-  INFINITY = "infinity",
-}
+export type ScrollType = "normal" | "infinity";
 
 export interface CardContainerProps {
-  page: string;
-  type: ScrollTypes;
+  type: ScrollType;
   characters: {
     id: number;
     image: string;

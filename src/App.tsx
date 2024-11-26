@@ -1,40 +1,50 @@
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Navbar from "./componentes/Navbar/Navbar";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
-import Characters from "./Pages/Characters";
-import Episodes from "./Pages/Episodes";
-import Location from "./Pages/Location";
-import CharacterDetails from "./Pages/CharacterDetails";
+import Episodes from "./pages/Episodes";
+import Location from "./pages/Location/LocationPage";
+import CharacterDetails from "./pages/CharacterDetails/CharacterDetailsPage";
+import Characters from "./pages/Characters/CharactersPage";
+import NotFound from "./pages/NotFound/NotFoundPage";
 
-const AppContent = () => {
-  const location = useLocation();
+const Layout = () => (
+  <>
+    <Navbar />
+    <Outlet />
+  </>
+);
 
-  return (
-    <>
-      <Navbar displaySearch={location.pathname !== "/"} />
-      <Routes>
-        <Route path="/" element={<Characters />} />
-        <Route path="/episodes" element={<Episodes />} />
-        <Route path="/location" element={<Location />} />
-        <Route path="/:id" element={<CharacterDetails />} />
-        <Route path="/episodes/:id" element={<CharacterDetails />} />
-        <Route path="/location/:id" element={<CharacterDetails />} />
-        <Route path="/character/:id" element={<CharacterDetails />} />
-      </Routes>
-    </>
-  );
-};
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    errorElement: <h1>Oops! Something went wrong...</h1>,
+    children: [
+      {
+        path: "/",
+        element: <Characters />,
+      },
+      {
+        path: "episodes",
+        element: <Episodes />,
+      },
+      {
+        path: "location",
+        element: <Location />,
+      },
+      {
+        path: "character/:id",
+        element: <CharacterDetails />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
+  },
+]);
 
 const App = () => {
-  return (
-    <Router>
-      <AppContent />
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

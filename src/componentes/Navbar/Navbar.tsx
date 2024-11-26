@@ -1,66 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { resetData } from "../../store/slices/characters/slice";
+import { setSearch } from "../../store/slices/search/slice";
+import { NavLink, useLocation } from "react-router-dom";
+import { fetchCharacters } from "../../store/slices/characters/thunk";
 import { AppDispatch } from "../../store";
-import { resetData, fetchCharacters } from "../../features/charactersSlice";
-import { setSearch } from "../../features/searchSlice";
-import { NavLink } from "react-router-dom";
-import NavbarProps from "./NavbarProps";
+import useDebounce from "../../hooks/useDebounce";
+import styles from "./Navbar.module.scss";
 
-const Navbar = ({ displaySearch }: NavbarProps) => {
+const Navbar = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    dispatch(setSearch(value));
+  useEffect(() => {
+    dispatch(setSearch(debouncedSearchTerm));
     dispatch(resetData());
     dispatch(fetchCharacters());
+  }, [debouncedSearchTerm, dispatch]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
   };
 
   return (
-    <div className="flex items-center justify-between h-16 bg-blue-600 px-8 shadow-md">
-      <h1 className="text-3xl text-white font-bold">
-        <NavLink to="/" className="hover:text-sky-300 transition-all">
+    <div className={styles.navbar}>
+      <h1 className={styles.title}>
+        <NavLink
+          to="/"
+          className={({ isActive }) => (isActive ? styles.active : undefined)}
+        >
           Characters
         </NavLink>
       </h1>
-      <div className="relative w-1/3">
-        {!displaySearch && (
+      <div className={styles.search}>
+        {location.pathname === "/" && (
           <input
             onChange={handleSearch}
+            value={searchTerm}
             placeholder="Search for characters"
-            className="w-full px-4 py-2 text-lg rounded-md border-2 border-sky-300 focus:outline-none focus:ring-2 focus:ring-sky-500"
             type="text"
           />
         )}
       </div>
-      <div className="flex gap-8">
+      <div className={styles.links}>
         <NavLink
           to="/"
-          className={({ isActive }: { isActive: boolean }) =>
-            isActive
-              ? "text-sky-300 font-bold text-lg"
-              : "text-white text-lg font-semibold hover:text-sky-300 transition-all"
-          }
+          className={({ isActive }) => (isActive ? styles.active : undefined)}
         >
           Characters
         </NavLink>
         <NavLink
           to="/episodes"
-          className={({ isActive }: { isActive: boolean }) =>
-            isActive
-              ? "text-sky-300 font-bold text-lg"
-              : "text-white text-lg font-semibold hover:text-sky-300 transition-all"
-          }
+          className={({ isActive }) => (isActive ? styles.active : undefined)}
         >
           Episode
         </NavLink>
         <NavLink
           to="/location"
-          className={({ isActive }: { isActive: boolean }) =>
-            isActive
-              ? "text-sky-300 font-bold text-lg"
-              : "text-white text-lg font-semibold hover:text-sky-300 transition-all"
-          }
+          className={({ isActive }) => (isActive ? styles.active : undefined)}
         >
           Location
         </NavLink>

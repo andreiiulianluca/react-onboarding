@@ -1,6 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchCharactersPerEpisode } from "./thunk";
 
-type Character = {
+export type Character = {
   id: number;
   name: string;
   image: string;
@@ -8,41 +9,12 @@ type Character = {
   location: { name: string; url: string };
 };
 
-type FetchedEpisodeData = {
+export type FetchedEpisodeData = {
   id: number;
   episode_name: string;
   air_date: string;
   characters: Character[];
 };
-
-export const fetchCharactersPerEpisode = createAsyncThunk<
-  FetchedEpisodeData,
-  number
->("episode/fetchCharactersPerEpisode", async (episodeId) => {
-  const response = await fetch(
-    `https://rickandmortyapi.com/api/episode/${episodeId}`
-  );
-
-  if (!response.ok) throw new Error("Failed to fetch episode data");
-
-  const episodeData = await response.json();
-
-  const characterPromises = episodeData.characters.map((characterUrl: string) =>
-    fetch(characterUrl).then((res) => {
-      if (!res.ok) throw new Error("Failed to fetch character data");
-      return res.json();
-    })
-  );
-
-  const characters: Character[] = await Promise.all(characterPromises);
-
-  return {
-    id: episodeData.id,
-    episode_name: episodeData.name,
-    air_date: episodeData.air_date,
-    characters,
-  };
-});
 
 type EpisodeState = {
   data: FetchedEpisodeData | null;

@@ -8,3 +8,5 @@ export default interface FilterButtonProps {
     input: string
   ) => { type: string; payload: any } | ((dispatch: AppDispatch) => void);
 }
+
+export type FilterCategories = "genders" | "status" | "species";

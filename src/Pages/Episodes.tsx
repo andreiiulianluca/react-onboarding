@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import CardContainer from "../componentes/CardContainer/CardContainer";
-import { ScrollTypes } from "../componentes/CardContainer/CardContainerProps";
-import { AppDispatch, RootState } from "../store";
 import FilterInput from "../componentes/Filter/category/FilterInput";
 import { useState, useEffect } from "react";
-import { fetchCharactersPerEpisode, resetData } from "../features/episodeSlice";
+import { fetchCharactersPerEpisode } from "../store/slices/episodes/thunk";
+import { resetData } from "../store/slices/episodes/slice";
+import { AppDispatch, RootState } from "../store";
 
 const Episodes = () => {
   const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
@@ -48,8 +48,7 @@ const Episodes = () => {
           </div>
         </div>
         <CardContainer
-          page="/episodes/"
-          type={ScrollTypes.NORMAL}
+          type="normal"
           characters={data?.characters || []}
           action={fetchCharactersPerEpisode(selectedEpisode)}
           isLoading={isLoading}

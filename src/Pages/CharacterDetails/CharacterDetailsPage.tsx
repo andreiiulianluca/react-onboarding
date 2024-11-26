@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { AppDispatch, RootState } from "../store";
-import {
-  fetchCharacterDetails,
-  resetData,
-} from "../features/characterDetailsSlice";
+import { fetchCharacterDetails } from "../../store/slices/characterDetails/thunks";
+import { resetData } from "../../store/slices/characterDetails/slice";
+import { AppDispatch, RootState } from "../../store";
 
 const CharacterDetails = () => {
   let { id } = useParams();

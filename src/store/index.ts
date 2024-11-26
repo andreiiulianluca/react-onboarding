@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import searchReducer from "./features/searchSlice";
-import charactersReducer from "./features/charactersSlice";
-import filterReducer from "./features/filterSlice";
-import locationReducer from "./features/locationSlice";
-import episodeReducer from "./features/episodeSlice";
-import characterDetailsReducer from "./features/characterDetailsSlice";
+import searchReducer from "./slices/search/slice";
+import charactersReducer from "./slices/characters/slice";
+import filterReducer from "./slices/filter/slice";
+import locationReducer from "./slices/locations/slice";
+import episodeReducer from "./slices/episodes/slice";
+import characterDetailsReducer from "./slices/characterDetails/slice";
 
 const store = configureStore({
   reducer: {

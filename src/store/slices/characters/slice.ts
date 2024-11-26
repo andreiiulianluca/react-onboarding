@@ -1,6 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { FilterState } from "./filterSlice";
-import { SearchState } from "./searchSlice";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchCharacters } from "./thunk";
 
 type Character = {
   id: number;
@@ -10,7 +9,7 @@ type Character = {
   location: { name: string; url: string };
 };
 
-type FetchedCharactersData = {
+export type FetchedCharactersData = {
   info: {
     count: number;
     pages: number;
@@ -20,7 +19,7 @@ type FetchedCharactersData = {
   results: Character[];
 };
 
-type CharactersState = {
+export type CharactersState = {
   data: FetchedCharactersData | null;
   isLoading: boolean;
   error: string | null;
@@ -33,32 +32,6 @@ const initialState: CharactersState = {
   error: null,
   pageNumber: 1,
 };
-
-export const fetchCharacters = createAsyncThunk<
-  FetchedCharactersData,
-  void,
-  {
-    state: {
-      characters: CharactersState;
-      filter: FilterState;
-      search: SearchState;
-    };
-  }
->("characters/fetchCharacters", async (_, { getState }) => {
-  const { pageNumber } = getState().characters;
-  const { search } = getState().search;
-  const { status, gender, species } = getState().filter;
-
-  const response = await fetch(
-    `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return response.json();
-});
 
 const charactersSlice = createSlice({
   name: "characters",
