@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FilterButton from "../Filter/FilterButton";
+import FilterButton from "../FilterButton/FilterButton";
 import { filterOptions } from "../../utils/constants";
 import styles from "./FilterDropdown.module.scss";
 import { FilterDropdownType } from "./FilterDropDownProps";

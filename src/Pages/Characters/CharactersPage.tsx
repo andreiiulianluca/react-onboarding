@@ -47,9 +47,7 @@ const Characters = () => {
               />
             ))
           : !isLoading && (
-              <div className={`${styles.message} ${styles["message--empty"]}`}>
-                No results found
-              </div>
+              <div className={`${styles.message}`}>No results found</div>
             )}
         {isLoading && (
           <div className={`${styles.message} ${styles.loading}`}>

@@ -1,0 +1,22 @@
+.filterButton {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #0ea5e9;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.3s, color 0.3s;
+
+  &.selected {
+    background-color: #0ea5e9;
+    color: white;
+  }
+
+  &:focus {
+    background-color: #0ea5e9;
+    outline: none;
+  }
+
+  &.notSelected {
+    border-color: #0ea5e9;
+  }
+}

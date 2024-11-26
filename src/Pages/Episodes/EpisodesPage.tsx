@@ -1,60 +1,58 @@
 import { useDispatch, useSelector } from "react-redux";
-import FilterInput from "../../componentes/FilterInput/FilterInput";
-import { useEffect, useState } from "react";
-import { fetchCharactersPerLocation } from "../../store/slices/locations/thunk";
+import styles from "./Episodes.module.scss";
 import { AppDispatch, RootState } from "../../store";
-import styles from "./LocationPage.module.scss";
+import { useEffect, useState } from "react";
+import { resetData } from "../../store/slices/episodes/slice";
+import { fetchCharactersPerEpisode } from "../../store/slices/episodes/thunk";
+import FilterInput from "../../componentes/FilterInput/FilterInput";
 import Card from "../../componentes/Card/Card";
 
-const Location = () => {
+const Episodes = () => {
+  const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
   const dispatch = useDispatch<AppDispatch>();
-  const [selectedLocation, setSelectedLocation] = useState<number>(1);
   const { data, isLoading, error } = useSelector(
-    (state: RootState) => state.location
+    (state: RootState) => state.episode
   );
 
-  const locationName = data?.location_name || "Unknown";
-  const dimension = data?.dimension || "Unknown";
-  const type = data?.type || "Unknown";
-  const charactersData = data?.characters;
+  const characterData = data?.characters;
+  const episodeName = data?.episode_name || "Unknown";
+  const airDate = data?.air_date || "Unknown";
 
   useEffect(() => {
-    dispatch(fetchCharactersPerLocation(selectedLocation));
-  }, [selectedLocation, dispatch]);
+    dispatch(resetData());
+    dispatch(fetchCharactersPerEpisode(selectedEpisode));
+  }, [selectedEpisode, dispatch]);
 
-  const handleLocationChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setSelectedLocation(Number(event.target.value));
+  const handleEpisodeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedEpisode(Number(event.target.value));
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.row}>
         <h1 className={styles["text-center"]}>
-          Location:{" "}
-          <span className={styles["text-primary"]}>{locationName}</span>
+          Episode name:{" "}
+          <span className={styles["text-primary"]}>{episodeName}</span>
         </h1>
-        <h5 className={styles["text-center"]}>Dimension: {dimension}</h5>
-        <h6 className={styles["text-center"]}>Type: {type}</h6>
+        <h5 className={styles["text-center"]}>Air Date: {airDate}</h5>
       </div>
       <div className={styles.flex}>
         <div className={styles.sidebar}>
           <div className={styles.header}>
-            <h2>Choose location</h2>
+            <h2>Pick an episode</h2>
           </div>
           <div className={styles.accordion}>
             <FilterInput
-              name="Location"
-              total={126}
-              action={handleLocationChange}
-              value={selectedLocation}
+              name="Episode"
+              total={51}
+              action={handleEpisodeChange}
+              value={selectedEpisode}
             />
           </div>
         </div>
         <div className={styles["card-container"]}>
-          {charactersData
-            ? charactersData.map((character) => (
+          {characterData
+            ? characterData.map((character) => (
                 <Card
                   key={character.id}
                   id={character.id}
@@ -75,4 +73,4 @@ const Location = () => {
   );
 };
 
-export default Location;
+export default Episodes;

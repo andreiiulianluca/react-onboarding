@@ -41,4 +41,5 @@ const filterCategories: {
     action: setSpecies,
   },
 ];
+
 export { filterOptions, filterCategories };

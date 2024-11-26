@@ -1,6 +1,6 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Navbar from "./componentes/Navbar/Navbar";
-import Episodes from "./pages/Episodes";
+import Episodes from "./pages/Episodes/EpisodesPage";
 import Location from "./pages/Location/LocationPage";
 import CharacterDetails from "./pages/CharacterDetails/CharacterDetailsPage";
 import Characters from "./pages/Characters/CharactersPage";

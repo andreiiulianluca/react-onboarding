@@ -1,10 +1,10 @@
-import styles from "./Filter.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setPageNumber } from "../../store/slices/search/slice";
 import { fetchCharacters } from "../../store/slices/characters/thunk";
 import { resetData } from "../../store/slices/characters/slice";
 import FilterButtonProps from "./FilterButtonProps";
 import { AppDispatch, RootState } from "../../store";
+import styles from "./FilterButton.module.scss";
 
 const FilterButton = ({ type, input, action }: FilterButtonProps) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,16 +26,18 @@ const FilterButton = ({ type, input, action }: FilterButtonProps) => {
         return status === input;
       case "species":
         return species === input;
+      default:
+        return false;
     }
   };
 
+  const buttonClass = isSelected(type) ? styles.selected : styles.notSelected;
+
   return (
-    <div className={`form-check ${styles}`}>
+    <div className={styles.filterButton}>
       <button
-        onClick={() => handleClick()}
-        className={`btn p-1 border-black-300 border ${
-          isSelected(type) ? "bg-sky-600 text-white" : "border-sky-600"
-        } focus:bg-sky-600 rounded-lg`}
+        onClick={handleClick}
+        className={`${styles.filterButton} ${buttonClass}`}
       >
         {input}
       </button>

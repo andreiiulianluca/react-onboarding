@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./FilterInput.module.scss";
 
 const FilterInput = ({
   name,
@@ -12,13 +13,13 @@ const FilterInput = ({
   action: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }) => {
   return (
-    <div className="mb-6">
-      <div className="relative">
+    <div className={styles.container}>
+      <div className={styles.selectWrapper}>
         <select
           onChange={action}
           value={value}
           id="episode-select"
-          className="block w-full px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-lg appearance-none"
+          className={styles.select}
         >
           {[...Array(total).keys()].map((_, index) => (
             <option key={index} value={index + 1}>
@@ -26,10 +27,10 @@ const FilterInput = ({
             </option>
           ))}
         </select>
-        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+        <div className={styles.iconWrapper}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5 text-gray-500"
+            className={styles.icon}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
