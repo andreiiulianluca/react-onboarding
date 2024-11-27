@@ -1,6 +1,14 @@
-import FilterButtonProps from "./FilterButtonProps";
 import styles from "./FilterButton.module.scss";
-import { useSearchFilterContext } from "../../contexts/SearchFilterContext";
+import {
+  Filters,
+  useSearchFilterContext,
+} from "../../contexts/SearchFilterContext";
+
+interface FilterButtonProps {
+  type: keyof Filters;
+  title: string;
+  action: (value: string) => void;
+}
 
 const FilterButton = ({ type, title, action }: FilterButtonProps) => {
   const { filters } = useSearchFilterContext();

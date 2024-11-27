@@ -1,10 +1,10 @@
-import CardProp from "./CardProps";
 import { Link } from "react-router-dom";
 import styles from "./Card.module.scss";
+import CardProp from "./CardProps";
 
 const Card = ({ id, image, name, location, status }: CardProp) => {
-  if (!id) {
-    return <div>No data available</div>;
+  if (!id || !image || !name) {
+    return <div className={styles.noData}>No data available</div>;
   }
 
   const badgeClass = (() => {
@@ -19,13 +19,8 @@ const Card = ({ id, image, name, location, status }: CardProp) => {
   })();
 
   return (
-    <Link
-      style={{ textDecoration: "none" }}
-      to={`/character/${id}`}
-      key={id}
-      className={styles.card}
-    >
-      <div className={styles.card}>
+    <Link to={`/character/${id}`} className={styles.card}>
+      <div className={styles.cardContent}>
         <div className={`${styles.badge} ${badgeClass}`}>{status}</div>
         <img src={image} alt={name} className={styles.img} />
         <div className={styles.content}>

@@ -1,30 +1,10 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { resetData } from "../../store/slices/characters/slice";
-import { NavLink, useLocation } from "react-router-dom";
-import { fetchCharacters } from "../../store/slices/characters/thunk";
-import { AppDispatch } from "../../store";
-import useDebounce from "../../hooks/useDebounce";
-import styles from "./Navbar.module.scss";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import { useSearchFilterContext } from "../../contexts/SearchFilterContext";
+import styles from "./Navbar.module.scss";
 
 const Navbar = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const location = useLocation();
-  const { searchTerm, setSearchTerm, filters } = useSearchFilterContext();
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
-  useEffect(() => {
-    setSearchTerm(debouncedSearchTerm);
-    dispatch(resetData());
-    dispatch(
-      fetchCharacters({
-        pageNumber: 1,
-        searchTerm: searchTerm,
-        filters: filters,
-      })
-    );
-  }, [debouncedSearchTerm]);
+  const { searchTerm, setSearchTerm } = useSearchFilterContext();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -41,14 +21,12 @@ const Navbar = () => {
         </NavLink>
       </h1>
       <div className={styles.search}>
-        {location.pathname === "/" && (
-          <input
-            onChange={handleSearch}
-            value={searchTerm}
-            placeholder="Search for characters"
-            type="text"
-          />
-        )}
+        <input
+          onChange={handleSearch}
+          value={searchTerm}
+          placeholder="Search for characters"
+          type="text"
+        />
       </div>
       <div className={styles.links}>
         <NavLink
@@ -64,7 +42,7 @@ const Navbar = () => {
           Episode
         </NavLink>
         <NavLink
-          to="/location"
+          to="/locations"
           className={({ isActive }) => (isActive ? styles.active : undefined)}
         >
           Location

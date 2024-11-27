@@ -3,7 +3,7 @@ import FilterInput from "../../components/FilterInput/FilterInput";
 import { useEffect, useState } from "react";
 import { fetchCharactersPerLocation } from "../../store/slices/locations/thunk";
 import { AppDispatch, RootState } from "../../store";
-import styles from "./LocationPage.module.scss";
+import styles from "./LocationsPage.module.scss";
 import Card from "../../components/Card/Card";
 
 const Location = () => {

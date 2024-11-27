@@ -1,17 +1,14 @@
 import React from "react";
 import styles from "./FilterInput.module.scss";
 
-const FilterInput = ({
-  name,
-  total,
-  value,
-  action,
-}: {
-  total: number;
+interface FilterInputProps {
   name: string;
+  total: number;
   value: number;
   action: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-}) => {
+}
+
+const FilterInput = ({ name, total, value, action }: FilterInputProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.selectWrapper}>

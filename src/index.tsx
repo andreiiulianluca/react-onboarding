@@ -4,7 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./store";
-import { SearchFilterProvider } from "./contexts/SearchFilterContext"; // Correct path
+import { SearchFilterProvider } from "./contexts/SearchFilterContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

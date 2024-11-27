@@ -2,17 +2,16 @@ import { useState } from "react";
 import FilterButton from "../FilterButton/FilterButton";
 import { filterOptions } from "../../utils/constants";
 import styles from "./FilterDropdown.module.scss";
-import { FilterDropdownType } from "./FilterDropDownProps";
 
-const FilterDropdown = ({
-  title,
-  type,
-  action,
-}: {
+export type FilterDropdownType = keyof typeof filterOptions;
+
+interface FilterDropdownProps {
   title: string;
   type: FilterDropdownType;
   action: (value: string) => void;
-}) => {
+}
+
+const FilterDropdown = ({ title, type, action }: FilterDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
