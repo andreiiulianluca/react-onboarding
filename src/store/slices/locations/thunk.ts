@@ -26,7 +26,7 @@ export const fetchCharactersPerLocation = createAsyncThunk<
         prev: null,
       },
       characters: residents,
-      location_name: locationData.name,
+      location: { name: locationData.name },
       dimension: locationData.dimension,
       type: locationData.type,
     };

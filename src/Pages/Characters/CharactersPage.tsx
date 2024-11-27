@@ -6,22 +6,29 @@ import {
   incrementPageNumber,
   resetData,
 } from "../../store/slices/characters/slice";
-import { AppDispatch, RootState } from "../../store";
+import { AppDispatch } from "../../store";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import styles from "./CharactersPage.module.scss";
 import Card from "../../components/Card/Card";
 import Filter from "../../components/Filter/Filter";
 import useDebounce from "../../hooks/useDebounce";
+import {
+  selectCharactersData,
+  selectCharactersError,
+  selectCharactersLoading,
+  selectCharactersPageNumber,
+} from "../../store/slices/characters/selectors";
 
 const Characters = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { searchTerm, filters, setFilter } = useSearchFilterContext();
+  const data = useSelector(selectCharactersData);
+  const pageNumber = useSelector(selectCharactersPageNumber);
+  const isLoading = useSelector(selectCharactersLoading);
+  const error = useSelector(selectCharactersError);
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const { data, isLoading, error, pageNumber } = useSelector(
-    (state: RootState) => state.characters
-  );
   const charactersData = data?.results;
 
   useEffect(() => {

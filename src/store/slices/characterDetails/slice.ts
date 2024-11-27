@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchCharacterDetails } from "./thunks";
+
 export type FetchedCharacterDetailsData = {
   id: number;
   name: string;

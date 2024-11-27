@@ -2,21 +2,24 @@ import { useDispatch, useSelector } from "react-redux";
 import FilterInput from "../../components/FilterInput/FilterInput";
 import { useEffect, useState } from "react";
 import { fetchCharactersPerLocation } from "../../store/slices/locations/thunk";
-import { AppDispatch, RootState } from "../../store";
+import { AppDispatch } from "../../store";
 import styles from "./LocationsPage.module.scss";
 import Card from "../../components/Card/Card";
+import {
+  selectLocationData,
+  selectLocationError,
+  selectLocationLoading,
+} from "../../store/slices/locations/selectors";
 
-const Location = () => {
+const Locations = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [selectedLocation, setSelectedLocation] = useState<number>(1);
-  const { data, isLoading, error } = useSelector(
-    (state: RootState) => state.location
-  );
+  const data = useSelector(selectLocationData);
+  const isLoading = useSelector(selectLocationLoading);
+  const error = useSelector(selectLocationError);
 
-  const locationName = data?.location_name || "Unknown";
-  const dimension = data?.dimension || "Unknown";
-  const type = data?.type || "Unknown";
-  const charactersData = data?.characters;
+  const { location, dimension, type, characters } = data || {};
+  const locationName = location?.name || "Unknown";
 
   useEffect(() => {
     dispatch(fetchCharactersPerLocation(selectedLocation));
@@ -33,10 +36,14 @@ const Location = () => {
       <div className={styles.row}>
         <h1 className={styles["text-center"]}>
           Location:{" "}
-          <span className={styles["text-primary"]}>{locationName}</span>
+          <span className={styles["text-primary"]}>
+            {locationName || "Unknown"}
+          </span>
         </h1>
-        <h5 className={styles["text-center"]}>Dimension: {dimension}</h5>
-        <h6 className={styles["text-center"]}>Type: {type}</h6>
+        <h5 className={styles["text-center"]}>
+          Dimension: {dimension || "Unknown"}
+        </h5>
+        <h6 className={styles["text-center"]}>Type: {type || "Unknown"}</h6>
       </div>
       <div className={styles.flex}>
         <div className={styles.sidebar}>
@@ -53,8 +60,8 @@ const Location = () => {
           </div>
         </div>
         <div className={styles["card-container"]}>
-          {charactersData
-            ? charactersData.map((character) => (
+          {characters
+            ? characters.map((character) => (
                 <Card
                   key={character.id}
                   id={character.id}
@@ -75,4 +82,4 @@ const Location = () => {
   );
 };
 
-export default Location;
+export default Locations;

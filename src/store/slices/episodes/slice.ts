@@ -11,8 +11,8 @@ export type Character = {
 
 export type FetchedEpisodeData = {
   id: number;
-  episode_name: string;
-  air_date: string;
+  episodeName: string;
+  airDate: string;
   characters: Character[];
 };
 

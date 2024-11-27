@@ -20,8 +20,8 @@ export const fetchCharactersPerEpisode = createAsyncThunk<
 
     return {
       id: episodeData.id,
-      episode_name: episodeData.name,
-      air_date: episodeData.air_date,
+      episodeName: episodeData.name,
+      airDate: episodeData.air_date,
       characters,
     };
   } catch (error) {

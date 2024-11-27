@@ -3,22 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchCharacterDetails } from "../../store/slices/characterDetails/thunks";
 import { resetData } from "../../store/slices/characterDetails/slice";
-import { AppDispatch, RootState } from "../../store";
+import { AppDispatch } from "../../store";
 import styles from "./CharacterDetailsPage.module.scss";
+import {
+  selectCharacterDetailsData,
+  selectCharacterDetailsError,
+  selectCharacterDetailsLoading,
+} from "../../store/slices/characterDetails/selectors";
 
 const CharacterDetails = () => {
   let { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
-  const { data, isLoading, error } = useSelector(
-    (state: RootState) => state.characterDetail
-  );
+  const data = useSelector(selectCharacterDetailsData);
+  const isLoading = useSelector(selectCharacterDetailsLoading);
+  const error = useSelector(selectCharacterDetailsError);
 
-  const name = data?.name;
-  const image = data?.image;
-  const gender = data?.gender;
-  const locationName = data?.location.name;
-  const originName = data?.origin.name;
-  const species = data?.species;
+  const { name, image, gender, location, origin, species } = data || {};
+
+  const locationName = location?.name;
+  const originName = origin?.name;
 
   useEffect(() => {
     dispatch(resetData());

@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Episodes from "./pages/Episodes/EpisodesPage";
-import Location from "./pages/Locations/LocationsPage";
+import Locations from "./pages/Locations/LocationsPage";
 import CharacterDetails from "./pages/CharacterDetails/CharacterDetailsPage";
 import Characters from "./pages/Characters/CharactersPage";
 import NotFound from "./pages/NotFound/NotFoundPage";
@@ -28,8 +28,8 @@ const router = createBrowserRouter([
         element: <Episodes />,
       },
       {
-        path: "location",
-        element: <Location />,
+        path: "locations",
+        element: <Locations />,
       },
       {
         path: "character/:id",

@@ -1,22 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Episodes.module.scss";
-import { AppDispatch, RootState } from "../../store";
+import { AppDispatch } from "../../store";
 import { useEffect, useState } from "react";
 import { resetData } from "../../store/slices/episodes/slice";
 import { fetchCharactersPerEpisode } from "../../store/slices/episodes/thunk";
 import FilterInput from "../../components/FilterInput/FilterInput";
 import Card from "../../components/Card/Card";
+import {
+  selectEpisodeData,
+  selectEpisodeError,
+  selectEpisodeLoading,
+} from "../../store/slices/episodes/selectors";
 
 const Episodes = () => {
   const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
   const dispatch = useDispatch<AppDispatch>();
-  const { data, isLoading, error } = useSelector(
-    (state: RootState) => state.episode
-  );
+  const data = useSelector(selectEpisodeData);
+  const isLoading = useSelector(selectEpisodeLoading);
+  const error = useSelector(selectEpisodeError);
 
-  const characterData = data?.characters;
-  const episodeName = data?.episode_name || "Unknown";
-  const airDate = data?.air_date || "Unknown";
+  const { characters, episodeName, airDate } = data || {};
 
   useEffect(() => {
     dispatch(resetData());
@@ -32,9 +35,13 @@ const Episodes = () => {
       <div className={styles.row}>
         <h1 className={styles["text-center"]}>
           Episode name:{" "}
-          <span className={styles["text-primary"]}>{episodeName}</span>
+          <span className={styles["text-primary"]}>
+            {episodeName || "Unknown"}
+          </span>
         </h1>
-        <h5 className={styles["text-center"]}>Air Date: {airDate}</h5>
+        <h5 className={styles["text-center"]}>
+          Air Date: {airDate || "Unknown"}
+        </h5>
       </div>
       <div className={styles.flex}>
         <div className={styles.sidebar}>
@@ -51,8 +58,8 @@ const Episodes = () => {
           </div>
         </div>
         <div className={styles["card-container"]}>
-          {characterData
-            ? characterData.map((character) => (
+          {characters
+            ? characters.map((character) => (
                 <Card
                   key={character.id}
                   id={character.id}

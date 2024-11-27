@@ -17,7 +17,7 @@ export type FetchedLocationData = {
     prev: string | null;
   };
   characters: Character[];
-  location_name: string;
+  location: { name: string };
   dimension: string;
   type: string;
 };
