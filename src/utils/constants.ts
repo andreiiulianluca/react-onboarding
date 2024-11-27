@@ -1,7 +1,3 @@
-import { setGender } from "../store/slices/filter/slice";
-import { setStatus } from "../store/slices/filter/slice";
-import { setSpecies } from "../store/slices/filter/slice";
-
 const filterOptions = {
   species: [
     "Human",
@@ -16,29 +12,25 @@ const filterOptions = {
     "Cronenberg",
     "Planet",
   ],
-  genders: ["female", "male", "genderless", "unknown"],
+  gender: ["female", "male", "genderless", "unknown"],
   status: ["Alive", "Dead", "Unknown"],
 };
 
 const filterCategories: {
   title: string;
   type: keyof typeof filterOptions;
-  action: any;
 }[] = [
   {
     title: "Gender",
-    type: "genders",
-    action: setGender,
+    type: "gender",
   },
   {
     title: "Status",
     type: "status",
-    action: setStatus,
   },
   {
     title: "Species",
     type: "species",
-    action: setSpecies,
   },
 ];
 

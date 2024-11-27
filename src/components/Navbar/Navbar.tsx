@@ -1,24 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { resetData } from "../../store/slices/characters/slice";
-import { setSearch } from "../../store/slices/search/slice";
 import { NavLink, useLocation } from "react-router-dom";
 import { fetchCharacters } from "../../store/slices/characters/thunk";
 import { AppDispatch } from "../../store";
 import useDebounce from "../../hooks/useDebounce";
 import styles from "./Navbar.module.scss";
+import { useSearchFilterContext } from "../../contexts/SearchFilterContext";
 
 const Navbar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
-  const [searchTerm, setSearchTerm] = useState("");
+  const { searchTerm, setSearchTerm, filters } = useSearchFilterContext();
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
-    dispatch(setSearch(debouncedSearchTerm));
+    setSearchTerm(debouncedSearchTerm);
     dispatch(resetData());
-    dispatch(fetchCharacters());
-  }, [debouncedSearchTerm, dispatch]);
+    dispatch(
+      fetchCharacters({
+        pageNumber: 1,
+        searchTerm: searchTerm,
+        filters: filters,
+      })
+    );
+  }, [debouncedSearchTerm]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);

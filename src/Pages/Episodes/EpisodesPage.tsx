@@ -4,8 +4,8 @@ import { AppDispatch, RootState } from "../../store";
 import { useEffect, useState } from "react";
 import { resetData } from "../../store/slices/episodes/slice";
 import { fetchCharactersPerEpisode } from "../../store/slices/episodes/thunk";
-import FilterInput from "../../componentes/FilterInput/FilterInput";
-import Card from "../../componentes/Card/Card";
+import FilterInput from "../../components/FilterInput/FilterInput";
+import Card from "../../components/Card/Card";
 
 const Episodes = () => {
   const [selectedEpisode, setSelectedEpisode] = useState<number>(1);

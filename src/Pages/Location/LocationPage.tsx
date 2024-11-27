@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import FilterInput from "../../componentes/FilterInput/FilterInput";
+import FilterInput from "../../components/FilterInput/FilterInput";
 import { useEffect, useState } from "react";
 import { fetchCharactersPerLocation } from "../../store/slices/locations/thunk";
 import { AppDispatch, RootState } from "../../store";
 import styles from "./LocationPage.module.scss";
-import Card from "../../componentes/Card/Card";
+import Card from "../../components/Card/Card";
 
 const Location = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -1,33 +1,39 @@
 import { useEffect } from "react";
-import Filter from "../../componentes/Filter/Filter";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCharacters } from "../../store/slices/characters/thunk";
+import { useSearchFilterContext } from "../../contexts/SearchFilterContext";
 import {
   incrementPageNumber,
   resetData,
 } from "../../store/slices/characters/slice";
 import { AppDispatch, RootState } from "../../store";
-import Card from "../../componentes/Card/Card";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import styles from "./CharactersPage.module.scss";
+import Card from "../../components/Card/Card";
+import Filter from "../../components/Filter/Filter";
 
 const Characters = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { searchTerm, filters } = useSearchFilterContext();
 
-  const { data, isLoading, error } = useSelector(
+  const { data, isLoading, error, pageNumber } = useSelector(
     (state: RootState) => state.characters
   );
   const charactersData = data?.results;
 
   const loadMore = () => {
     dispatch(incrementPageNumber());
-    dispatch(fetchCharacters());
+    dispatch(
+      fetchCharacters({ pageNumber: pageNumber + 1, searchTerm, filters })
+    );
   };
 
   useEffect(() => {
     dispatch(resetData());
-    dispatch(fetchCharacters());
-  }, [dispatch]);
+    dispatch(
+      fetchCharacters({ pageNumber: pageNumber + 1, searchTerm, filters })
+    );
+  }, []);
 
   useInfiniteScroll({ isLoading, onLoadMore: loadMore });
 

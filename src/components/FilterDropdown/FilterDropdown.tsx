@@ -11,7 +11,7 @@ const FilterDropdown = ({
 }: {
   title: string;
   type: FilterDropdownType;
-  action: any;
+  action: (value: string) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -44,7 +44,7 @@ const FilterDropdown = ({
                 key={index}
                 type={type}
                 action={action}
-                input={item}
+                title={item}
               />
             ))}
           </div>

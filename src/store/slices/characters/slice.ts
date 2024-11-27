@@ -42,7 +42,7 @@ const charactersSlice = createSlice({
       state.pageNumber = 1;
     },
     incrementPageNumber(state) {
-      state.pageNumber = state.pageNumber + 1;
+      state.pageNumber += 1;
     },
   },
   extraReducers: (builder) => {

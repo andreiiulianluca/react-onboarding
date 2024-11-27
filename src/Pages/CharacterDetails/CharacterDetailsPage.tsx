@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { fetchCharacterDetails } from "../../store/slices/characterDetails/thunks";
 import { resetData } from "../../store/slices/characterDetails/slice";
 import { AppDispatch, RootState } from "../../store";
+import styles from "./CharacterDetailsPage.module.scss";
 
 const CharacterDetails = () => {
   let { id } = useParams();
@@ -25,33 +26,33 @@ const CharacterDetails = () => {
   }, [dispatch, id]);
 
   if (isLoading) {
-    return <div className="text-center mt-5">Loading...</div>;
+    return <div className={styles.loadingText}>Loading...</div>;
   }
 
   if (error) {
-    return <div className="text-center mt-5 text-red-500">Error: {error}</div>;
+    return <div className={styles.errorText}>Error: {error}</div>;
   }
 
   return (
-    <div className="flex justify-center mt-5">
-      <div className="flex flex-col gap-3">
-        <h1 className="text-center">{name}</h1>
-        <img className="img-fluid" src={image} alt="" />
-        <div className="content">
-          <div className="">
-            <span className="fw-bold">Gender : </span>
+    <div className={styles.characterDetailsContainer}>
+      <div className={styles.characterDetailsContent}>
+        <h1 className={styles.characterName}>{name}</h1>
+        <img className={styles.characterImage} src={image} alt={name} />
+        <div className={styles.detailsContent}>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Gender: </span>
             {gender}
           </div>
-          <div className="">
-            <span className="fw-bold">Location: </span>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Location: </span>
             {locationName}
           </div>
-          <div className="">
-            <span className="fw-bold">Origin: </span>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Origin: </span>
             {originName}
           </div>
-          <div className="">
-            <span className="fw-bold">Species: </span>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Species: </span>
             {species}
           </div>
         </div>
