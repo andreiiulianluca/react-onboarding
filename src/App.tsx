@@ -21,19 +21,27 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Characters />,
+        element: <Outlet />,
+        children: [
+          { index: true, element: <Characters /> },
+          { path: ":id", element: <CharacterDetails /> },
+        ],
       },
       {
         path: "episodes",
-        element: <Episodes />,
+        element: <Outlet />,
+        children: [
+          { index: true, element: <Episodes /> },
+          { path: ":id", element: <CharacterDetails /> },
+        ],
       },
       {
         path: "locations",
-        element: <Locations />,
-      },
-      {
-        path: "character/:id",
-        element: <CharacterDetails />,
+        element: <Outlet />,
+        children: [
+          { index: true, element: <Locations /> },
+          { path: ":id", element: <CharacterDetails /> },
+        ],
       },
       {
         path: "*",

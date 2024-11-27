@@ -7,10 +7,10 @@ import {
 interface FilterButtonProps {
   type: keyof Filters;
   title: string;
-  action: (value: string) => void;
+  onFilterChange: (type: string, value: string) => void;
 }
 
-const FilterButton = ({ type, title, action }: FilterButtonProps) => {
+const FilterButton = ({ type, title, onFilterChange }: FilterButtonProps) => {
   const { filters } = useSearchFilterContext();
 
   const buttonClass =
@@ -19,7 +19,7 @@ const FilterButton = ({ type, title, action }: FilterButtonProps) => {
   return (
     <div>
       <button
-        onClick={() => action(title)}
+        onClick={() => onFilterChange(type, title)}
         className={`${styles.filterButton} ${buttonClass}`}
       >
         {title}

@@ -1,4 +1,3 @@
-import React from "react";
 import { filterCategories } from "../../utils/constants";
 import styles from "./Filter.module.scss";
 import FilterDropdown from "../FilterDropdown/FilterDropdown";
@@ -23,7 +22,7 @@ const Filter = ({ onFilterChange, onResetFilters }: FilterProps) => {
             key={category.type}
             title={category.title}
             type={category.type}
-            action={(value: string) => onFilterChange(category.type, value)}
+            onFilterChange={onFilterChange}
           />
         ))}
       </div>

@@ -8,10 +8,14 @@ export type FilterDropdownType = keyof typeof filterOptions;
 interface FilterDropdownProps {
   title: string;
   type: FilterDropdownType;
-  action: (value: string) => void;
+  onFilterChange: (type: string, value: string) => void;
 }
 
-const FilterDropdown = ({ title, type, action }: FilterDropdownProps) => {
+const FilterDropdown = ({
+  title,
+  type,
+  onFilterChange,
+}: FilterDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -42,7 +46,7 @@ const FilterDropdown = ({ title, type, action }: FilterDropdownProps) => {
               <FilterButton
                 key={index}
                 type={type}
-                action={action}
+                onFilterChange={onFilterChange}
                 title={item}
               />
             ))}

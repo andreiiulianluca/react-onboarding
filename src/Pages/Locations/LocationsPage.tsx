@@ -1,23 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import FilterInput from "../../components/FilterInput/FilterInput";
 import { useEffect, useState } from "react";
 import { fetchCharactersPerLocation } from "../../store/slices/locations/thunk";
-import { AppDispatch } from "../../store";
+import { AppDispatch, useAppSelector } from "../../store";
 import styles from "./LocationsPage.module.scss";
 import Card from "../../components/Card/Card";
-import {
-  selectLocationData,
-  selectLocationError,
-  selectLocationLoading,
-} from "../../store/slices/locations/selectors";
 
 const Locations = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [selectedLocation, setSelectedLocation] = useState<number>(1);
-  const data = useSelector(selectLocationData);
-  const isLoading = useSelector(selectLocationLoading);
-  const error = useSelector(selectLocationError);
-
+  const { data, isLoading, error } = useAppSelector((state) => state.location);
   const { location, dimension, type, characters } = data || {};
   const locationName = location?.name || "Unknown";
 

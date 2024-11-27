@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom";
 import styles from "./Card.module.scss";
-import CardProp from "./CardProps";
+
+interface CardProp {
+  id: number;
+  name: string;
+  image: string;
+  location: { name: string; url: string };
+  status: string;
+}
 
 const Card = ({ id, image, name, location, status }: CardProp) => {
   if (!id || !image || !name) {
@@ -19,7 +26,7 @@ const Card = ({ id, image, name, location, status }: CardProp) => {
   })();
 
   return (
-    <Link to={`/character/${id}`} className={styles.card}>
+    <Link to={`${id}`} className={styles.card}>
       <div className={styles.cardContent}>
         <div className={`${styles.badge} ${badgeClass}`}>{status}</div>
         <img src={image} alt={name} className={styles.img} />
