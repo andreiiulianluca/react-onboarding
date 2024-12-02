@@ -4,11 +4,10 @@ import { AppDispatch, useAppSelector } from "../../store";
 import { useEffect, useState } from "react";
 import { resetData } from "../../store/slices/episodes/slice";
 import { fetchCharactersPerEpisode } from "../../store/slices/episodes/thunk";
-import FilterInput from "../../components/FilterInput/FilterInput";
+import FilterSelect from "../../components/Filter/FilterSelect/FilterSelect";
 import Card from "../../components/Card/Card";
-import { Outlet } from "react-router-dom";
 
-const Episodes = () => {
+const EpisodesPage = () => {
   const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
   const dispatch = useDispatch<AppDispatch>();
   const { data, isLoading, error } = useAppSelector((state) => state.episode);
@@ -27,13 +26,13 @@ const Episodes = () => {
     <>
       <div className={styles.container}>
         <div className={styles.row}>
-          <h1 className={styles["text-center"]}>
+          <h1 className={styles.textCenter}>
             Episode name:{" "}
-            <span className={styles["text-primary"]}>
+            <span className={styles.textPrimary}>
               {episodeName || "Unknown"}
             </span>
           </h1>
-          <h5 className={styles["text-center"]}>
+          <h5 className={styles.textCenter}>
             Air Date: {airDate || "Unknown"}
           </h5>
         </div>
@@ -43,7 +42,7 @@ const Episodes = () => {
               <h2>Pick an episode</h2>
             </div>
             <div className={styles.accordion}>
-              <FilterInput
+              <FilterSelect
                 name="Episode"
                 total={51}
                 action={handleEpisodeChange}
@@ -51,7 +50,7 @@ const Episodes = () => {
               />
             </div>
           </div>
-          <div className={styles["card-container"]}>
+          <div className={styles.cardContainer}>
             {characters
               ? characters.map((character) => (
                   <Card
@@ -63,19 +62,24 @@ const Episodes = () => {
                     status={character.status}
                   />
                 ))
-              : !isLoading && <div className="m-auto">No results found</div>}
-            {isLoading && <div className="text-center mt-5">Loading...</div>}
+              : !isLoading && (
+                  <div className={`${styles.message}`}>No results found</div>
+                )}
+            {isLoading && (
+              <div className={`${styles.message} ${styles.loading}`}>
+                Loading...
+              </div>
+            )}
             {error && (
-              <div className="text-center mt-5 text-red-500">
+              <div className={`${styles.message} ${styles.error}`}>
                 Error: {error}
               </div>
             )}
           </div>
         </div>
       </div>
-      <Outlet />
     </>
   );
 };
 
-export default Episodes;
+export default EpisodesPage;

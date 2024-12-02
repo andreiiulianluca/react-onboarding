@@ -1,10 +1,10 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Episodes from "./pages/Episodes/EpisodesPage";
-import Locations from "./pages/Locations/LocationsPage";
 import CharacterDetails from "./pages/CharacterDetails/CharacterDetailsPage";
-import Characters from "./pages/Characters/CharactersPage";
 import NotFound from "./pages/NotFound/NotFoundPage";
+import CharactersPage from "./pages/Characters/CharactersPage";
+import LocationsPage from "./pages/Locations/LocationsPage";
 
 const Layout = () => (
   <>
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Outlet />,
         children: [
-          { index: true, element: <Characters /> },
+          { index: true, element: <CharactersPage /> },
           { path: ":id", element: <CharacterDetails /> },
         ],
       },
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
         path: "locations",
         element: <Outlet />,
         children: [
-          { index: true, element: <Locations /> },
+          { index: true, element: <LocationsPage /> },
           { path: ":id", element: <CharacterDetails /> },
         ],
       },

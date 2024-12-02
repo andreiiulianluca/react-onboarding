@@ -1,21 +1,21 @@
 import { useState } from "react";
 import FilterButton from "../FilterButton/FilterButton";
-import { filterOptions } from "../../utils/constants";
-import styles from "./FilterDropdown.module.scss";
+import { filterOptions } from "../../../utils/constants";
+import styles from "./FilterAccordion.module.scss";
 
-export type FilterDropdownType = keyof typeof filterOptions;
+export type FilterAccordionType = keyof typeof filterOptions;
 
-interface FilterDropdownProps {
+interface FilterAccordionProps {
   title: string;
-  type: FilterDropdownType;
+  type: FilterAccordionType;
   onFilterChange: (type: string, value: string) => void;
 }
 
-const FilterDropdown = ({
+const FilterAccordion = ({
   title,
   type,
   onFilterChange,
-}: FilterDropdownProps) => {
+}: FilterAccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -57,4 +57,4 @@ const FilterDropdown = ({
   );
 };
 
-export default FilterDropdown;
+export default FilterAccordion;

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchCharacterDetails } from "../../store/slices/characterDetails/thunks";
+import { fetchCharacterDetails } from "../../store/slices/characterDetails/thunk";
 import { resetData } from "../../store/slices/characterDetails/slice";
 import { AppDispatch, useAppSelector } from "../../store";
 import styles from "./CharacterDetailsPage.module.scss";

@@ -2,7 +2,7 @@ import styles from "./FilterButton.module.scss";
 import {
   Filters,
   useSearchFilterContext,
-} from "../../contexts/SearchFilterContext";
+} from "../../../contexts/SearchFilterContext";
 
 interface FilterButtonProps {
   type: keyof Filters;

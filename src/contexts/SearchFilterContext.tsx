@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 export type Filters = {
-  gender: string | null;
-  species: string | null;
-  status: string | null;
+  gender?: string;
+  species?: string;
+  status?: string;
 };
 
 type SearchFilterContextType = {
@@ -26,9 +26,9 @@ export const SearchFilterProvider = ({
 }: SearchFilterProviderProps): JSX.Element => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filters, setFilter] = useState<Filters>({
-    gender: null,
-    species: null,
-    status: null,
+    gender: "",
+    species: "",
+    status: "",
   });
 
   return (

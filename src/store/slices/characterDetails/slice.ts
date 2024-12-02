@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCharacterDetails } from "./thunks";
+import { fetchCharacterDetails } from "./thunk";
 
 export type FetchedCharacterDetailsData = {
   id: number;
@@ -15,13 +15,13 @@ export type FetchedCharacterDetailsData = {
 type CharacterDetailsState = {
   data: FetchedCharacterDetailsData | null;
   isLoading: boolean;
-  error: string | null;
+  error?: string;
 };
 
 const initialState: CharacterDetailsState = {
   data: null,
   isLoading: false,
-  error: null,
+  error: "",
 };
 
 const characterDetailsSlice = createSlice({
@@ -31,18 +31,18 @@ const characterDetailsSlice = createSlice({
     resetData(state) {
       state.data = null;
       state.isLoading = false;
-      state.error = null;
+      state.error = "";
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCharacterDetails.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        state.error = "";
       })
       .addCase(fetchCharacterDetails.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = null;
+        state.error = "";
         state.data = action.payload;
       })
       .addCase(fetchCharacterDetails.rejected, (state, action) => {

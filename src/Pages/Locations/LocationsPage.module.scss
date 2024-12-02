@@ -66,17 +66,28 @@
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
+
+  .message {
+    margin: auto;
+    text-align: center;
+
+    &.loading {
+      margin-top: 1.25rem;
+      font-size: 1rem;
+    }
+
+    &.error {
+      margin-top: 1.25rem;
+      color: #dc2626;
+      font-size: 1rem;
+    }
+  }
 }
 
-.text-primary {
+.textPrimary {
   color: #007bff;
 }
-.text-center {
+
+.textCenter {
   text-align: center;
-}
-.text-lg {
-  font-size: 1.125rem;
-}
-.text-2xl {
-  font-size: 2rem;
 }

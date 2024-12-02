@@ -1,6 +1,6 @@
 import { filterCategories } from "../../utils/constants";
 import styles from "./Filter.module.scss";
-import FilterDropdown from "../FilterDropdown/FilterDropdown";
+import FilterAccordion from "./FilterAccordion/FilterAccordion";
 
 type FilterProps = {
   onFilterChange: (type: string, value: string) => void;
@@ -18,7 +18,7 @@ const Filter = ({ onFilterChange, onResetFilters }: FilterProps) => {
       </div>
       <div className={styles.accordion}>
         {filterCategories.map((category) => (
-          <FilterDropdown
+          <FilterAccordion
             key={category.type}
             title={category.title}
             type={category.type}

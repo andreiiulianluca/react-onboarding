@@ -13,34 +13,39 @@ import Card from "../../components/Card/Card";
 import Filter from "../../components/Filter/Filter";
 import useDebounce from "../../hooks/useDebounce";
 
-const Characters = () => {
+const CharactersPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { searchTerm, filters, setFilter } = useSearchFilterContext();
   const { data, pageNumber, isLoading, error } = useAppSelector(
     (state) => state.characters
   );
 
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
   const charactersData = data?.results;
 
+  const debouncedFetchCharacters = useDebounce(
+    (searchTerm: string, filters: any) => {
+      dispatch(resetData());
+      dispatch(
+        fetchCharacters({
+          pageNumber: 1,
+          searchTerm,
+          filters,
+        })
+      );
+    },
+    500
+  );
+
   useEffect(() => {
-    dispatch(resetData());
-    dispatch(
-      fetchCharacters({
-        pageNumber: 1,
-        searchTerm: debouncedSearchTerm,
-        filters,
-      })
-    );
-  }, [debouncedSearchTerm, filters]);
+    debouncedFetchCharacters(searchTerm, filters);
+  }, [searchTerm, filters]);
 
   const loadMore = () => {
     dispatch(incrementPageNumber());
     dispatch(
       fetchCharacters({
         pageNumber: pageNumber + 1,
-        searchTerm: debouncedSearchTerm,
+        searchTerm,
         filters,
       })
     );
@@ -48,16 +53,16 @@ const Characters = () => {
 
   const handleResetFilters = () => {
     setFilter({
-      gender: null,
-      species: null,
-      status: null,
+      gender: "",
+      species: "",
+      status: "",
     });
     dispatch(resetData());
     dispatch(
       fetchCharacters({
         pageNumber: 1,
         searchTerm: searchTerm,
-        filters: { gender: null, species: null, status: null },
+        filters: { gender: "", species: "", status: "" },
       })
     );
   };
@@ -69,7 +74,7 @@ const Characters = () => {
     dispatch(
       fetchCharacters({
         pageNumber: 1,
-        searchTerm: debouncedSearchTerm,
+        searchTerm,
         filters: updatedFilters,
       })
     );
@@ -83,7 +88,7 @@ const Characters = () => {
         onFilterChange={handleFilterChange}
         onResetFilters={handleResetFilters}
       />
-      <div className={styles["characters-grid"]}>
+      <div className={styles.charactersGrid}>
         {charactersData
           ? charactersData.map((character) => (
               <Card
@@ -113,4 +118,4 @@ const Characters = () => {
   );
 };
 
-export default Characters;
+export default CharactersPage;

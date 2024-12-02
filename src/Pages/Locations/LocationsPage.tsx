@@ -1,12 +1,12 @@
 import { useDispatch } from "react-redux";
-import FilterInput from "../../components/FilterInput/FilterInput";
+import FilterSelect from "../../components/Filter/FilterSelect/FilterSelect";
 import { useEffect, useState } from "react";
 import { fetchCharactersPerLocation } from "../../store/slices/locations/thunk";
 import { AppDispatch, useAppSelector } from "../../store";
 import styles from "./LocationsPage.module.scss";
 import Card from "../../components/Card/Card";
 
-const Locations = () => {
+const LocationsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [selectedLocation, setSelectedLocation] = useState<number>(1);
   const { data, isLoading, error } = useAppSelector((state) => state.location);
@@ -43,7 +43,7 @@ const Locations = () => {
             <h2>Choose location</h2>
           </div>
           <div className={styles.accordion}>
-            <FilterInput
+            <FilterSelect
               name="Location"
               total={126}
               action={handleLocationChange}
@@ -63,10 +63,18 @@ const Locations = () => {
                   status={character.status}
                 />
               ))
-            : !isLoading && <div className="m-auto">No results found</div>}
-          {isLoading && <div className="text-center mt-5">Loading...</div>}
+            : !isLoading && (
+                <div className={`${styles.message}`}>No results found</div>
+              )}
+          {isLoading && (
+            <div className={`${styles.message} ${styles.loading}`}>
+              Loading...
+            </div>
+          )}
           {error && (
-            <div className="text-center mt-5 text-red-500">Error: {error}</div>
+            <div className={`${styles.message} ${styles.error}`}>
+              Error: {error}
+            </div>
           )}
         </div>
       </div>
@@ -74,4 +82,4 @@ const Locations = () => {
   );
 };
 
-export default Locations;
+export default LocationsPage;
