@@ -13,23 +13,23 @@ export type FetchedCharactersData = {
   info: {
     count: number;
     pages: number;
-    next: string | null;
-    prev: string | null;
+    next?: string;
+    prev?: string;
   };
   results: Character[];
 };
 
 export type CharactersState = {
-  data: FetchedCharactersData | null;
+  info?: FetchedCharactersData;
+  characters?: Character[];
   isLoading: boolean;
-  error: string | null;
+  error?: string;
   pageNumber: number;
 };
 
 const initialState: CharactersState = {
-  data: null,
   isLoading: false,
-  error: null,
+  error: "",
   pageNumber: 1,
 };
 
@@ -37,10 +37,6 @@ const charactersSlice = createSlice({
   name: "characters",
   initialState,
   reducers: {
-    resetData(state) {
-      state.data = null;
-      state.pageNumber = 1;
-    },
     incrementPageNumber(state) {
       state.pageNumber += 1;
     },
@@ -49,17 +45,14 @@ const charactersSlice = createSlice({
     builder
       .addCase(fetchCharacters.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        state.error = "";
       })
       .addCase(fetchCharacters.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = null;
-        state.data = {
-          ...action.payload,
-          results: state.data
-            ? [...state.data.results, ...action.payload.results]
-            : action.payload.results,
-        };
+        state.error = "";
+        state.characters = state.characters
+          ? [...state.characters, ...action.payload.results]
+          : action.payload.results;
       })
       .addCase(fetchCharacters.rejected, (state, action) => {
         state.isLoading = false;
@@ -68,5 +61,5 @@ const charactersSlice = createSlice({
   },
 });
 
-export const { resetData, incrementPageNumber } = charactersSlice.actions;
+export const { incrementPageNumber } = charactersSlice.actions;
 export default charactersSlice.reducer;

@@ -19,32 +19,28 @@ export type FetchedEpisodeData = {
 type EpisodeState = {
   data: FetchedEpisodeData | null;
   isLoading: boolean;
-  error: string | null;
+  error?: string;
 };
 
 const initialState: EpisodeState = {
   data: null,
   isLoading: false,
-  error: null,
+  error: "",
 };
 
 const episodeSlice = createSlice({
   name: "episode",
   initialState,
-  reducers: {
-    resetData(state) {
-      state.data = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCharactersPerEpisode.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        state.error = "";
       })
       .addCase(fetchCharactersPerEpisode.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = null;
+        state.error = "";
         state.data = action.payload;
       })
       .addCase(fetchCharactersPerEpisode.rejected, (state, action) => {
@@ -54,5 +50,4 @@ const episodeSlice = createSlice({
   },
 });
 
-export const { resetData } = episodeSlice.actions;
 export default episodeSlice.reducer;

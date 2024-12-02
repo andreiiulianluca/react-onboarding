@@ -5,6 +5,7 @@ import { fetchCharactersPerLocation } from "../../store/slices/locations/thunk";
 import { AppDispatch, useAppSelector } from "../../store";
 import styles from "./LocationsPage.module.scss";
 import Card from "../../components/Card/Card";
+import clsx from "clsx";
 
 const LocationsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -58,21 +59,21 @@ const LocationsPage = () => {
                   key={character.id}
                   id={character.id}
                   image={character.image}
-                  name={character.name}
-                  location={character.location}
-                  status={character.status}
+                  title={character.name}
+                  badge={character.status}
+                  description={character.status}
                 />
               ))
             : !isLoading && (
-                <div className={`${styles.message}`}>No results found</div>
+                <div className={styles.message}>No results found</div>
               )}
           {isLoading && (
-            <div className={`${styles.message} ${styles.loading}`}>
+            <div className={clsx(styles.message, styles.loading)}>
               Loading...
             </div>
           )}
           {error && (
-            <div className={`${styles.message} ${styles.error}`}>
+            <div className={clsx(styles.message, styles.error)}>
               Error: {error}
             </div>
           )}

@@ -20,8 +20,6 @@ export const fetchCharactersPerLocation = createAsyncThunk<
     info: {
       count: residents.length,
       pages: 1,
-      next: null,
-      prev: null,
     },
     characters: residents,
     location: { name: locationData.name },

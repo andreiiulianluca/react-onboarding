@@ -2,6 +2,7 @@ import { useState } from "react";
 import FilterButton from "../FilterButton/FilterButton";
 import { filterOptions } from "../../../utils/constants";
 import styles from "./FilterAccordion.module.scss";
+import clsx from "clsx";
 
 export type FilterAccordionType = keyof typeof filterOptions;
 
@@ -37,7 +38,7 @@ const FilterAccordion = ({
       </h2>
       <div
         id="collapseOne"
-        className={`${styles.accordionCollapse} ${isOpen ? styles.open : ""}`}
+        className={clsx(styles.accordionCollapse, { [styles.open]: isOpen })}
         aria-labelledby="headingOne"
       >
         <div className={styles.accordionBody}>

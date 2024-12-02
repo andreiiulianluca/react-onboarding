@@ -13,8 +13,8 @@ export type FetchedLocationData = {
   info: {
     count: number;
     pages: number;
-    next: string | null;
-    prev: string | null;
+    next?: string;
+    prev?: string;
   };
   characters: Character[];
   location: { name: string };
@@ -25,28 +25,24 @@ export type FetchedLocationData = {
 type LocationState = {
   data: FetchedLocationData | null;
   isLoading: boolean;
-  error: string | null;
+  error?: string;
 };
 
 const initialState: LocationState = {
   data: null,
   isLoading: false,
-  error: null,
+  error: "",
 };
 
 const locationsSlice = createSlice({
   name: "locationsSlice",
   initialState,
-  reducers: {
-    resetData(state) {
-      state.data = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCharactersPerLocation.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        state.error = "";
       })
       .addCase(fetchCharactersPerLocation.rejected, (state, action) => {
         state.isLoading = false;
@@ -54,11 +50,10 @@ const locationsSlice = createSlice({
       })
       .addCase(fetchCharactersPerLocation.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = null;
+        state.error = "";
         state.data = action.payload;
       });
   },
 });
 
-export const { resetData } = locationsSlice.actions;
 export default locationsSlice.reducer;

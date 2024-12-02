@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchCharacterDetails } from "./thunk";
 
-export type FetchedCharacterDetailsData = {
+export type CharacterDetails = {
   id: number;
   name: string;
   image: string;
@@ -13,13 +13,13 @@ export type FetchedCharacterDetailsData = {
 };
 
 type CharacterDetailsState = {
-  data: FetchedCharacterDetailsData | null;
+  characterDetails: CharacterDetails | null;
   isLoading: boolean;
   error?: string;
 };
 
 const initialState: CharacterDetailsState = {
-  data: null,
+  characterDetails: null,
   isLoading: false,
   error: "",
 };
@@ -27,13 +27,7 @@ const initialState: CharacterDetailsState = {
 const characterDetailsSlice = createSlice({
   name: "characterDetails",
   initialState,
-  reducers: {
-    resetData(state) {
-      state.data = null;
-      state.isLoading = false;
-      state.error = "";
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCharacterDetails.pending, (state) => {
@@ -43,7 +37,7 @@ const characterDetailsSlice = createSlice({
       .addCase(fetchCharacterDetails.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = "";
-        state.data = action.payload;
+        state.characterDetails = action.payload;
       })
       .addCase(fetchCharacterDetails.rejected, (state, action) => {
         state.isLoading = false;
@@ -52,5 +46,4 @@ const characterDetailsSlice = createSlice({
   },
 });
 
-export const { resetData } = characterDetailsSlice.actions;
 export default characterDetailsSlice.reducer;

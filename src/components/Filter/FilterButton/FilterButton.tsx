@@ -3,6 +3,7 @@ import {
   Filters,
   useSearchFilterContext,
 } from "../../../contexts/SearchFilterContext";
+import clsx from "clsx";
 
 interface FilterButtonProps {
   type: keyof Filters;
@@ -13,14 +14,14 @@ interface FilterButtonProps {
 const FilterButton = ({ type, title, onFilterChange }: FilterButtonProps) => {
   const { filters } = useSearchFilterContext();
 
-  const buttonClass =
-    filters[type] === title ? styles.selected : styles.notSelected;
-
   return (
     <div>
       <button
         onClick={() => onFilterChange(type, title)}
-        className={`${styles.filterButton} ${buttonClass}`}
+        className={clsx(styles.filterButton, {
+          [styles.selected]: filters[type] === title,
+          [styles.notSelected]: filters[type] !== title,
+        })}
       >
         {title}
       </button>
