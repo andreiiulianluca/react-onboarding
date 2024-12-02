@@ -1,22 +1,58 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import Card from "./componentes/Card/Card";
-import Navbar from "./componentes/Navbar/Navbar";
-import InfiniteScroll from "./componentes/InfiniteScroll/InfiniteScroll";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
+import Episodes from "./pages/Episodes/EpisodesPage";
+import CharacterDetails from "./pages/CharacterDetails/CharacterDetailsPage";
+import NotFound from "./pages/NotFound/NotFoundPage";
+import CharactersPage from "./pages/Characters/CharactersPage";
+import LocationsPage from "./pages/Locations/LocationsPage";
 
-function App() {
-  const [pageNumber, setPageNumber] = useState<Number>(1);
-  const [searchValue, setSearchValue] = useState<String>("");
+const Layout = () => (
+  <>
+    <Navbar />
+    <Outlet />
+  </>
+);
 
-  return (
-    <div className="App">
-      <Navbar setSearch={setSearchValue} updatePageNumber={setPageNumber} />
-      <div className="flex container mx-auto px-4">
-        <p>Filter component will be placed here</p>
-        <InfiniteScroll />
-      </div>
-    </div>
-  );
-}
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    errorElement: <h1>Oops! Something went wrong...</h1>,
+    children: [
+      {
+        path: "/",
+        element: <Outlet />,
+        children: [
+          { index: true, element: <CharactersPage /> },
+          { path: ":id", element: <CharacterDetails /> },
+        ],
+      },
+      {
+        path: "episodes",
+        element: <Outlet />,
+        children: [
+          { index: true, element: <Episodes /> },
+          { path: ":id", element: <CharacterDetails /> },
+        ],
+      },
+      {
+        path: "locations",
+        element: <Outlet />,
+        children: [
+          { index: true, element: <LocationsPage /> },
+          { path: ":id", element: <CharacterDetails /> },
+        ],
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
+  },
+]);
+
+const App = () => {
+  return <RouterProvider router={router} />;
+};
 
 export default App;
