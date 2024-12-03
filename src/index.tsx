@@ -26,6 +26,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <CharactersPage />,
       },
+      { path: "/characters", element: <CharactersPage /> },
       { path: "/:id", element: <CharacterDetails /> },
       {
         path: "episode",

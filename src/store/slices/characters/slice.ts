@@ -20,7 +20,7 @@ export type FetchedCharactersData = {
 };
 
 export type CharactersState = {
-  info?: FetchedCharactersData;
+  info?: FetchedCharactersData["info"];
   characters?: Character[];
   isLoading: boolean;
   error?: string;
@@ -50,9 +50,16 @@ const charactersSlice = createSlice({
       .addCase(fetchCharacters.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = "";
-        state.characters = state.characters
-          ? [...state.characters, ...action.payload.results]
-          : action.payload.results;
+
+        if (action.meta.arg.pageNumber === 1) {
+          state.characters = action.payload.results;
+        } else {
+          state.characters = state.characters
+            ? [...state.characters, ...action.payload.results]
+            : action.payload.results;
+        }
+
+        state.info = action.payload.info;
       })
       .addCase(fetchCharacters.rejected, (state, action) => {
         state.isLoading = false;

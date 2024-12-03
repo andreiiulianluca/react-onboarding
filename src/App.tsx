@@ -4,8 +4,10 @@ import { useSearchFilterContext } from "./contexts/SearchFilterContext";
 
 const App = () => {
   const currentLocation = useLocation();
-  const headerHasSearchBar = currentLocation.pathname === "/";
   const { searchTerm, setSearchTerm } = useSearchFilterContext();
+  const headerHasSearchBar =
+    currentLocation.pathname === "/" ||
+    currentLocation.pathname === "/characters";
 
   return (
     <>

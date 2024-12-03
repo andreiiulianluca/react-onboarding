@@ -10,8 +10,9 @@ import clsx from "clsx";
 const EpisodesPage = () => {
   const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
   const dispatch = useDispatch<AppDispatch>();
-  const { data, isLoading, error } = useAppSelector((state) => state.episode);
-  const { characters, episodeName, airDate } = data || {};
+  const { characters, name, airDate, isLoading, error } = useAppSelector(
+    (state) => state.episode
+  );
 
   useEffect(() => {
     dispatch(fetchCharactersPerEpisode(selectedEpisode));
@@ -26,7 +27,7 @@ const EpisodesPage = () => {
       <div className={styles.row}>
         <h1 className={styles.textCenter}>
           Episode name:{" "}
-          <span className={styles.textPrimary}>{episodeName || "Unknown"}</span>
+          <span className={styles.textPrimary}>{name || "Unknown"}</span>
         </h1>
         <h5 className={styles.textCenter}>Air Date: {airDate || "Unknown"}</h5>
       </div>

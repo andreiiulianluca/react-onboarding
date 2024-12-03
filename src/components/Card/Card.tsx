@@ -27,12 +27,12 @@ const Card = ({ id, image, title, badge, description }: CardProp) => {
   })();
 
   return (
-    <Link to={`${id}`} className={styles.card}>
+    <Link to={`/${id}`} className={styles.card}>
       <div className={styles.cardContent}>
         <div className={clsx(styles.badge, badgeClass)}>{badge}</div>
         <img src={image} alt={title} className={styles.img} />
         <div className={styles.content}>
-          <h5>{title}</h5>
+          <p className={styles.contentTitle}>{title}</p>
           <p>{description}</p>
         </div>
       </div>

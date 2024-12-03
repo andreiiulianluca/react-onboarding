@@ -1,6 +1,6 @@
 import api from "../../../services/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Character, FetchedEpisodeData } from "./slice";
+import { FetchedEpisodeData } from "./slice";
 
 export const fetchCharactersPerEpisode = createAsyncThunk<
   FetchedEpisodeData,
@@ -8,21 +8,11 @@ export const fetchCharactersPerEpisode = createAsyncThunk<
 >("episode/fetchCharactersPerEpisode", async (episodeId) => {
   const { data: episodeData } = await api.get(`episode/${episodeId}`);
 
-  const characters2 = await api.get(`character/${episodeId}`);
-  console.log("characters", characters2);
-
-  const characterPromises = episodeData.characters.map((characterUrl: string) =>
-    api
-      .get<Character>(characterUrl.replace(api.defaults.baseURL || "", ""))
-      .then((res) => res.data)
-  );
-
-  const characters: Character[] = await Promise.all(characterPromises);
+  const characters = await api.get(`character/?episode=${episodeId}`);
 
   return {
-    id: episodeData.id,
-    episodeName: episodeData.name,
+    name: episodeData.name,
     airDate: episodeData.air_date,
-    characters,
+    characters: characters.data.results,
   };
 });

@@ -8,22 +8,15 @@ export const fetchCharactersPerLocation = createAsyncThunk<
 >("location/fetchCharactersPerLocation", async (locationId) => {
   const { data: locationData } = await api.get(`location/${locationId}`);
 
-  const characterPromises = locationData.residents.map((residentUrl: string) =>
-    api
-      .get(residentUrl.replace(api.defaults.baseURL || "", ""))
-      .then((res) => res.data)
-  );
-
-  const residents = await Promise.all(characterPromises);
+  const residents = await api.get(`character/?location=${locationId}`);
 
   return {
     info: {
-      count: residents.length,
+      count: residents.data.results.length,
       pages: 1,
     },
-    characters: residents,
-    location: { name: locationData.name },
-    dimension: locationData.dimension,
+    characters: residents.data.results,
+    location: { name: locationData.name, dimension: locationData.dimension },
     type: locationData.type,
   };
 });

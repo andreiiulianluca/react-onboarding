@@ -10,9 +10,9 @@ import clsx from "clsx";
 const LocationsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [selectedLocation, setSelectedLocation] = useState<number>(1);
-  const { data, isLoading, error } = useAppSelector((state) => state.location);
-  const { location, dimension, type, characters } = data || {};
-  const locationName = location?.name || "Unknown";
+  const { characters, location, type, isLoading, error } = useAppSelector(
+    (state) => state.location
+  );
 
   useEffect(() => {
     dispatch(fetchCharactersPerLocation(selectedLocation));
@@ -30,11 +30,11 @@ const LocationsPage = () => {
         <h1 className={styles["text-center"]}>
           Location:{" "}
           <span className={styles["text-primary"]}>
-            {locationName || "Unknown"}
+            {location?.name || "Unknown"}
           </span>
         </h1>
         <h5 className={styles["text-center"]}>
-          Dimension: {dimension || "Unknown"}
+          Dimension: {location?.dimension || "Unknown"}
         </h5>
         <h6 className={styles["text-center"]}>Type: {type || "Unknown"}</h6>
       </div>
