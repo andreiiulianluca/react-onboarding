@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchCharacters } from "../../store/slices/characters/thunk";
 import { useSearchFilterContext } from "../../contexts/SearchFilterContext";
@@ -14,9 +14,10 @@ import clsx from "clsx";
 const CharactersPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { searchTerm, filters, setFilter } = useSearchFilterContext();
-  const { characters, pageNumber, isLoading, error } = useAppSelector(
+  const { characters, pageNumber, isLoading, info, error } = useAppSelector(
     (state) => state.characters
   );
+  const hasMore = Boolean(info?.next);
 
   const debouncedFetchCharacters = useDebounce(
     (searchTerm: string, filters: any) => {
@@ -35,7 +36,8 @@ const CharactersPage = () => {
     debouncedFetchCharacters(searchTerm, filters);
   }, [searchTerm, filters]);
 
-  const loadMore = () => {
+  const loadMore = useCallback(() => {
+    if (!hasMore) return;
     dispatch(incrementPageNumber());
     dispatch(
       fetchCharacters({
@@ -44,7 +46,7 @@ const CharactersPage = () => {
         filters,
       })
     );
-  };
+  }, [hasMore, pageNumber, searchTerm, filters, dispatch]);
 
   const handleResetFilters = () => {
     setFilter({
@@ -73,7 +75,7 @@ const CharactersPage = () => {
     );
   };
 
-  useInfiniteScroll({ isLoading, onLoadMore: loadMore });
+  useInfiniteScroll({ isLoading, onLoadMore: loadMore, hasMore });
 
   return (
     <div className={styles.container}>

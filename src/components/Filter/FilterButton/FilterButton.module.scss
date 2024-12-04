@@ -1,6 +1,7 @@
 .filterButton {
+  background-color: #ffff;
   padding: 0.25rem 0.5rem;
-  border: 1px solid #0ea5e9;
+  border: 2px solid #0ea5e9;
   border-radius: 0.375rem;
   cursor: pointer;
   display: inline-block;
@@ -8,7 +9,7 @@
 
   &.selected {
     background-color: #0ea5e9;
-    color: white;
+    color: #ffff;
   }
 
   &:focus {
