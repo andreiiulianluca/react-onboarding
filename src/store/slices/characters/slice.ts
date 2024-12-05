@@ -1,15 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchCharacters } from "./thunk";
+import { Character } from "../../../types/types";
 
-type Character = {
-  id: number;
-  name: string;
-  image: string;
-  status: string;
-  location: { name: string; url: string };
-};
-
-export type FetchedCharactersData = {
+export type FetchedCharacters = {
   info: {
     count: number;
     pages: number;
@@ -20,7 +13,7 @@ export type FetchedCharactersData = {
 };
 
 export type CharactersState = {
-  info?: FetchedCharactersData["info"];
+  info?: FetchedCharacters["info"];
   characters?: Character[];
   isLoading: boolean;
   error?: string;

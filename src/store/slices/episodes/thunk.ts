@@ -1,9 +1,9 @@
 import api from "../../../services/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { FetchedEpisodeData } from "./slice";
+import { FetchedEpisode } from "./slice";
 
 export const fetchCharactersPerEpisode = createAsyncThunk<
-  FetchedEpisodeData,
+  FetchedEpisode,
   number
 >("episode/fetchCharactersPerEpisode", async (episodeId) => {
   const { data: episodeData } = await api.get(`episode/${episodeId}`);

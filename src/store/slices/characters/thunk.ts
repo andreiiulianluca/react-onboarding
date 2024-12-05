@@ -1,6 +1,6 @@
 import api from "../../../services/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { FetchedCharactersData } from "./slice";
+import { FetchedCharacters } from "./slice";
 
 type FetchCharactersParams = {
   pageNumber: number;
@@ -13,7 +13,7 @@ type FetchCharactersParams = {
 };
 
 export const fetchCharacters = createAsyncThunk<
-  FetchedCharactersData,
+  FetchedCharacters,
   FetchCharactersParams
 >("characters/fetchCharacters", async ({ pageNumber, searchTerm, filters }) => {
   const { status, gender, species } = filters;
@@ -22,6 +22,6 @@ export const fetchCharacters = createAsyncThunk<
     status || ""
   }&gender=${gender || ""}&species=${species || ""}`;
 
-  const response = await api.get<FetchedCharactersData>(url);
+  const response = await api.get<FetchedCharacters>(url);
   return response.data;
 });

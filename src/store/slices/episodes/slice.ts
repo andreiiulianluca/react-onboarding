@@ -1,24 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchCharactersPerEpisode } from "./thunk";
+import { Character } from "../../../types/types";
 
-export type Character = {
-  id: number;
-  name: string;
-  image: string;
-  status: string;
-  location: { name: string; url: string };
-};
-
-export type FetchedEpisodeData = {
+export type FetchedEpisode = {
   name: string;
   airDate: string;
   characters: Character[];
 };
 
 type EpisodeState = {
-  name: FetchedEpisodeData["name"] | null;
-  airDate: FetchedEpisodeData["airDate"] | null;
-  characters: FetchedEpisodeData["characters"] | null;
+  name: FetchedEpisode["name"] | null;
+  airDate: FetchedEpisode["airDate"] | null;
+  characters: FetchedEpisode["characters"] | null;
   isLoading: boolean;
   error?: string | null;
 };

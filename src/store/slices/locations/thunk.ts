@@ -1,9 +1,9 @@
 import api from "../../../services/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { FetchedLocationData } from "./slice";
+import { FetchedLocation } from "./slice";
 
 export const fetchCharactersPerLocation = createAsyncThunk<
-  FetchedLocationData,
+  FetchedLocation,
   number
 >("location/fetchCharactersPerLocation", async (locationId) => {
   const { data: locationData } = await api.get(`location/${locationId}`);

@@ -1,15 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchCharactersPerLocation } from "./thunk";
+import { Character } from "../../../types/types";
 
-type Character = {
-  id: number;
-  name: string;
-  location: { name: string; url: string };
-  image: string;
-  status: string;
-};
-
-export type FetchedLocationData = {
+export type FetchedLocation = {
   info: {
     count: number;
     pages: number;
@@ -22,9 +15,9 @@ export type FetchedLocationData = {
 };
 
 type LocationState = {
-  info: FetchedLocationData["info"] | null;
-  location: FetchedLocationData["location"] | null;
-  type: FetchedLocationData["type"] | null;
+  info: FetchedLocation["info"] | null;
+  location: FetchedLocation["location"] | null;
+  type: FetchedLocation["type"] | null;
   characters: Character[] | null;
   isLoading: boolean;
   error: string | null;
