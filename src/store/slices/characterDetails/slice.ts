@@ -13,13 +13,13 @@ export type CharacterDetails = {
 };
 
 type CharacterDetailsState = {
-  characterDetails: CharacterDetails | null;
+  characterDetails?: CharacterDetails;
   isLoading: boolean;
   error?: string;
 };
 
 const initialState: CharacterDetailsState = {
-  characterDetails: null,
+  characterDetails: undefined,
   isLoading: false,
   error: "",
 };

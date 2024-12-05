@@ -4,8 +4,7 @@ import { AppDispatch, useAppSelector } from "../../store";
 import { useEffect, useState } from "react";
 import { fetchCharactersPerEpisode } from "../../store/slices/episodes/thunk";
 import FilterSelect from "../../components/Filter/FilterSelect/FilterSelect";
-import Card from "../../components/Card/Card";
-import clsx from "clsx";
+import CardContainer from "../../components/CardContainer/CardContainer";
 
 const EpisodesPage = () => {
   const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
@@ -46,30 +45,11 @@ const EpisodesPage = () => {
           </div>
         </div>
         <div className={styles.cardContainer}>
-          {characters
-            ? characters.map((character) => (
-                <Card
-                  key={character.id}
-                  id={character.id}
-                  image={character.image}
-                  title={character.name}
-                  badge={character.status}
-                  description={character.status}
-                />
-              ))
-            : !isLoading && (
-                <div className={styles.message}>No results found</div>
-              )}
-          {isLoading && (
-            <div className={clsx(styles.message, styles.loading)}>
-              Loading...
-            </div>
-          )}
-          {error && (
-            <div className={clsx(styles.message, styles.error)}>
-              Error: {error}
-            </div>
-          )}
+          <CardContainer
+            characters={characters}
+            isLoading={isLoading}
+            error={error}
+          />
         </div>
       </div>
     </div>

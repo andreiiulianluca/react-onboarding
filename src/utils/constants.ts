@@ -12,7 +12,7 @@ const filterOptions = {
     "Cronenberg",
     "Planet",
   ],
-  gender: ["female", "male", "genderless", "unknown"],
+  gender: ["Female", "Male", "Genderless", "Unknown"],
   status: ["Alive", "Dead", "Unknown"],
 };
 

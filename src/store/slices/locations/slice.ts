@@ -15,21 +15,21 @@ export type FetchedLocation = {
 };
 
 type LocationState = {
-  info: FetchedLocation["info"] | null;
-  location: FetchedLocation["location"] | null;
-  type: FetchedLocation["type"] | null;
-  characters: Character[] | null;
+  info?: FetchedLocation["info"];
+  location?: FetchedLocation["location"];
+  type?: FetchedLocation["type"];
+  characters?: Character[];
   isLoading: boolean;
-  error: string | null;
+  error?: string;
 };
 
 const initialState: LocationState = {
-  info: null,
-  location: null,
-  type: null,
-  characters: null,
+  info: undefined,
+  location: undefined,
+  type: undefined,
+  characters: undefined,
   isLoading: false,
-  error: null,
+  error: undefined,
 };
 
 const locationsSlice = createSlice({
@@ -40,7 +40,7 @@ const locationsSlice = createSlice({
     builder
       .addCase(fetchCharactersPerLocation.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        state.error = undefined;
       })
       .addCase(fetchCharactersPerLocation.rejected, (state, action) => {
         state.isLoading = false;
@@ -48,7 +48,7 @@ const locationsSlice = createSlice({
       })
       .addCase(fetchCharactersPerLocation.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = null;
+        state.error = undefined;
         state.characters = action.payload.characters;
         state.location = action.payload.location;
         state.type = action.payload.type;

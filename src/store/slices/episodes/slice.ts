@@ -9,17 +9,17 @@ export type FetchedEpisode = {
 };
 
 type EpisodeState = {
-  name: FetchedEpisode["name"] | null;
-  airDate: FetchedEpisode["airDate"] | null;
-  characters: FetchedEpisode["characters"] | null;
+  name?: FetchedEpisode["name"];
+  airDate?: FetchedEpisode["airDate"];
+  characters?: FetchedEpisode["characters"];
   isLoading: boolean;
-  error?: string | null;
+  error?: string;
 };
 
 const initialState: EpisodeState = {
-  name: null,
-  airDate: null,
-  characters: null,
+  name: undefined,
+  airDate: undefined,
+  characters: undefined,
   isLoading: false,
   error: "",
 };
@@ -32,11 +32,11 @@ const episodeSlice = createSlice({
     builder
       .addCase(fetchCharactersPerEpisode.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        state.error = undefined;
       })
       .addCase(fetchCharactersPerEpisode.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = null;
+        state.error = undefined;
         state.characters = action.payload.characters;
         state.name = action.payload.name;
         state.airDate = action.payload.airDate;

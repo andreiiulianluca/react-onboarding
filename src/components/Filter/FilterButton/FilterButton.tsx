@@ -14,10 +14,14 @@ interface FilterButtonProps {
 const FilterButton = ({ type, title, onFilterChange }: FilterButtonProps) => {
   const { filters } = useSearchFilterContext();
 
+  const handleFilterButtonClick = () => {
+    onFilterChange(type, title);
+  };
+
   return (
     <div>
       <button
-        onClick={() => onFilterChange(type, title)}
+        onClick={handleFilterButtonClick}
         className={clsx(styles.filterButton, {
           [styles.selected]: filters[type] === title,
           [styles.notSelected]: filters[type] !== title,

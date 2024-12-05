@@ -6,10 +6,9 @@ import { incrementPageNumber } from "../../store/slices/characters/slice";
 import { AppDispatch, useAppSelector } from "../../store";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import styles from "./CharactersPage.module.scss";
-import Card from "../../components/Card/Card";
 import Filter from "../../components/Filter/Filter";
 import useDebounce from "../../hooks/useDebounce";
-import clsx from "clsx";
+import CardContainer from "../../components/CardContainer/CardContainer";
 
 const CharactersPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -84,28 +83,11 @@ const CharactersPage = () => {
         onResetFilters={handleResetFilters}
       />
       <div className={styles.charactersGrid}>
-        {characters
-          ? characters.map((character) => (
-              <Card
-                key={character.id}
-                id={character.id}
-                image={character.image}
-                title={character.name}
-                badge={character.status}
-                description={character.status}
-              />
-            ))
-          : !isLoading && (
-              <div className={styles.message}>No results found</div>
-            )}
-        {isLoading && (
-          <div className={clsx(styles.message, styles.loading)}>Loading...</div>
-        )}
-        {error && (
-          <div className={clsx(styles.message, styles.error)}>
-            Error: {error}
-          </div>
-        )}
+        <CardContainer
+          characters={characters}
+          isLoading={isLoading}
+          error={error}
+        />
       </div>
     </div>
   );

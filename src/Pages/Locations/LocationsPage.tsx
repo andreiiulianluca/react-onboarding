@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchCharactersPerLocation } from "../../store/slices/locations/thunk";
 import { AppDispatch, useAppSelector } from "../../store";
 import styles from "./LocationsPage.module.scss";
-import Card from "../../components/Card/Card";
-import clsx from "clsx";
+import CardContainer from "../../components/CardContainer/CardContainer";
 
 const LocationsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -53,30 +52,11 @@ const LocationsPage = () => {
           </div>
         </div>
         <div className={styles["card-container"]}>
-          {characters
-            ? characters.map((character) => (
-                <Card
-                  key={character.id}
-                  id={character.id}
-                  image={character.image}
-                  title={character.name}
-                  badge={character.status}
-                  description={character.status}
-                />
-              ))
-            : !isLoading && (
-                <div className={styles.message}>No results found</div>
-              )}
-          {isLoading && (
-            <div className={clsx(styles.message, styles.loading)}>
-              Loading...
-            </div>
-          )}
-          {error && (
-            <div className={clsx(styles.message, styles.error)}>
-              Error: {error}
-            </div>
-          )}
+          <CardContainer
+            characters={characters}
+            isLoading={isLoading}
+            error={error}
+          />
         </div>
       </div>
     </div>
