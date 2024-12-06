@@ -1,0 +1,15 @@
+.message {
+  margin: auto;
+  text-align: center;
+
+  &.loading {
+    margin-top: 1.25rem;
+    font-size: 1rem;
+  }
+
+  &.error {
+    margin-top: 1.25rem;
+    color: #dc2626;
+    font-size: 1rem;
+  }
+}
