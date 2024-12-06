@@ -1,35 +1,35 @@
 import { Link } from "react-router-dom";
 import styles from "./Card.module.scss";
-import clsx from "clsx";
+import Badge from "../Badge/Badge";
 
-interface CardProp {
+interface CardProps {
   id: number;
   title: string;
   image: string;
-  badge: string;
-  description: string;
+  status?: string;
+  description?: string;
 }
 
-const Card = ({ id, image, title, badge, description }: CardProp) => {
+const Card = ({ id, image, title, status, description }: CardProps) => {
   if (!id || !image || !title) {
     return <div className={styles.noData}>No data available</div>;
   }
 
-  const badgeClass = (() => {
-    switch (badge) {
-      case "Dead":
-        return styles["bg-red-600"];
-      case "Alive":
-        return styles["bg-green-600"];
+  const mapStatusToVariant = (status: string) => {
+    switch (status.toLowerCase()) {
+      case "dead":
+        return "dead";
+      case "alive":
+        return "alive";
       default:
-        return styles["bg-zinc-500"];
+        return "unknown";
     }
-  })();
+  };
 
   return (
     <Link to={`/${id}`} className={styles.card}>
       <div className={styles.cardContent}>
-        <div className={clsx(styles.badge, badgeClass)}>{badge}</div>
+        {status && <Badge text={status} variant={mapStatusToVariant(status)} />}
         <img src={image} alt={title} className={styles.img} />
         <div className={styles.content}>
           <p className={styles.contentTitle}>{title}</p>

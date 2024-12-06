@@ -3,6 +3,7 @@ import FilterButton from "../FilterButton/FilterButton";
 import { filterOptions } from "../../../utils/constants";
 import styles from "./FilterAccordion.module.scss";
 import clsx from "clsx";
+import { useSearchFilterContext } from "../../../contexts/SearchFilterContext";
 
 export type FilterAccordionType = keyof typeof filterOptions;
 
@@ -17,6 +18,7 @@ const FilterAccordion = ({
   type,
   onFilterChange,
 }: FilterAccordionProps) => {
+  const { filters } = useSearchFilterContext();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -43,14 +45,20 @@ const FilterAccordion = ({
       >
         <div className={styles.accordionBody}>
           <div className={styles.filterOptions}>
-            {(filterOptions[type] || []).map((item, index) => (
-              <FilterButton
-                key={index}
-                type={type}
-                onFilterChange={onFilterChange}
-                title={item}
-              />
-            ))}
+            {(filterOptions[type] || []).map((title, index) => {
+              const buttonVariant =
+                filters[type] === title ? "selected" : "outlined";
+
+              return (
+                <FilterButton
+                  variant={buttonVariant}
+                  key={index}
+                  type={type}
+                  onFilterChange={onFilterChange}
+                  title={title}
+                />
+              );
+            })}
           </div>
         </div>
       </div>

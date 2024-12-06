@@ -1,8 +1,5 @@
 $radius: 10px;
 $hover-border-color: #0b5ed7;
-$badge-red: #dc2626;
-$badge-green: #16a34a;
-$badge-gray: #71717a;
 
 .card {
   position: relative;
@@ -24,29 +21,6 @@ $badge-gray: #71717a;
     height: 12rem;
     object-fit: cover;
     border-radius: $radius $radius 0 0;
-  }
-
-  .badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px 10px;
-    border-radius: 12px;
-    color: #ffff;
-    font-size: 0.875rem;
-    z-index: 10;
-
-    &.bg-red-600 {
-      background-color: $badge-red;
-    }
-
-    &.bg-green-600 {
-      background-color: $badge-green;
-    }
-
-    &.bg-zinc-500 {
-      background-color: $badge-gray;
-    }
   }
 
   .content {

@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./Header.module.scss";
-import { appCategories } from "./constants";
+import { appCategories } from "../../utils/constants";
 
 interface HeaderProps {
   searchInputValue: string;

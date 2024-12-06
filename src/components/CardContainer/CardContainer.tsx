@@ -3,13 +3,17 @@ import Card from "../Card/Card";
 import { Character } from "../../types/types";
 import styles from "./CardContainer.module.scss";
 
-interface CardContainerProp {
+interface CardContainerProps {
   characters: Character[] | undefined;
   isLoading: boolean;
   error?: string;
 }
 
-const CardContainer = ({ characters, isLoading, error }: CardContainerProp) => {
+const CardContainer = ({
+  characters,
+  isLoading,
+  error,
+}: CardContainerProps) => {
   return (
     <>
       {characters
@@ -19,8 +23,8 @@ const CardContainer = ({ characters, isLoading, error }: CardContainerProp) => {
               id={character.id}
               image={character.image}
               title={character.name}
-              badge={character.status}
-              description={character.status}
+              status={character.status}
+              description={character.location.name}
             />
           ))
         : !isLoading && <div className={styles.message}>No results found</div>}

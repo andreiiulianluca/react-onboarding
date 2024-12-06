@@ -34,4 +34,22 @@ const filterCategories: {
   },
 ];
 
-export { filterOptions, filterCategories };
+const appCategories: {
+  link: string;
+  title: string;
+}[] = [
+  {
+    title: "Characters",
+    link: "/",
+  },
+  {
+    title: "Episode",
+    link: "/episode",
+  },
+  {
+    title: "Location",
+    link: "/location",
+  },
+];
+
+export { filterOptions, filterCategories, appCategories };
