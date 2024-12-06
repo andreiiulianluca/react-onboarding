@@ -5,14 +5,14 @@ import { appCategories } from "../../utils/constants";
 
 interface HeaderProps {
   searchInputValue: string;
-  onSearchInputChange: React.Dispatch<React.SetStateAction<string>>;
   headerHasSearchBar: boolean;
+  onSearchInputChange: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Header = ({
   searchInputValue,
-  onSearchInputChange,
   headerHasSearchBar,
+  onSearchInputChange,
 }: HeaderProps) => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearchInputChange(e.target.value);

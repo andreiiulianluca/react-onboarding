@@ -2,6 +2,7 @@ import clsx from "clsx";
 import Card from "../Card/Card";
 import { Character } from "../../types/types";
 import styles from "./CardContainer.module.scss";
+import { getBadgeVariant } from "../../utils/helpers";
 
 interface CardContainerProps {
   characters: Character[] | undefined;
@@ -23,7 +24,10 @@ const CardContainer = ({
               id={character.id}
               image={character.image}
               title={character.name}
-              status={character.status}
+              badgeProps={{
+                text: character.status,
+                variant: getBadgeVariant(character.status),
+              }}
               description={character.location.name}
             />
           ))

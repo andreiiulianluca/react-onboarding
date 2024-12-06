@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import styles from "./Badge.module.scss";
 
-interface BadgeProps {
+export interface BadgeProps {
   text: string;
-  variant: "dead" | "alive" | "unknown";
+  variant: "success" | "error" | "default";
 }
 
 const Badge = ({ text, variant }: BadgeProps) => (

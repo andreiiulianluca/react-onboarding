@@ -1,15 +1,10 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-
-export type Filters = {
-  gender?: string;
-  species?: string;
-  status?: string;
-};
+import { Filters } from "../types/types";
 
 type SearchFilterContextType = {
   searchTerm: string;
-  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   filters: Filters;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   setFilter: React.Dispatch<React.SetStateAction<Filters>>;
 };
 

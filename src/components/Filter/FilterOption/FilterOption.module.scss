@@ -1,4 +1,4 @@
-.filterButton {
+.filterOption {
   background-color: #ffff;
   padding: 0.25rem 0.5rem;
   border: 2px solid #0ea5e9;
@@ -6,8 +6,9 @@
   cursor: pointer;
   display: inline-block;
   transition: background-color 0.3s, color 0.3s;
+  border-color: #0ea5e9;
 
-  &.selected {
+  &.isChecked {
     background-color: #0ea5e9;
     color: #ffff;
   }
@@ -15,9 +16,5 @@
   &:focus {
     background-color: #0ea5e9;
     outline: none;
-  }
-
-  &.outlined {
-    border-color: #0ea5e9;
   }
 }

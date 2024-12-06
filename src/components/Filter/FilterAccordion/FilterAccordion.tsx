@@ -1,16 +1,15 @@
 import { useState } from "react";
-import FilterButton from "../FilterButton/FilterButton";
 import { filterOptions } from "../../../utils/constants";
 import styles from "./FilterAccordion.module.scss";
 import clsx from "clsx";
 import { useSearchFilterContext } from "../../../contexts/SearchFilterContext";
-
-export type FilterAccordionType = keyof typeof filterOptions;
+import FilterOption from "../FilterOption/FilterOption";
+import { Filters } from "../../../types/types";
 
 interface FilterAccordionProps {
   title: string;
-  type: FilterAccordionType;
-  onFilterChange: (type: string, value: string) => void;
+  type: keyof Filters;
+  onFilterChange: (type: keyof Filters, value: string) => void;
 }
 
 const FilterAccordion = ({
@@ -45,20 +44,15 @@ const FilterAccordion = ({
       >
         <div className={styles.accordionBody}>
           <div className={styles.filterOptions}>
-            {(filterOptions[type] || []).map((title, index) => {
-              const buttonVariant =
-                filters[type] === title ? "selected" : "outlined";
-
-              return (
-                <FilterButton
-                  variant={buttonVariant}
-                  key={index}
-                  type={type}
-                  onFilterChange={onFilterChange}
-                  title={title}
-                />
-              );
-            })}
+            {(filterOptions[type] || []).map((title, index) => (
+              <FilterOption
+                key={index}
+                type={type}
+                isChecked={filters[type] === title}
+                title={title}
+                onFilterChange={onFilterChange}
+              />
+            ))}
           </div>
         </div>
       </div>

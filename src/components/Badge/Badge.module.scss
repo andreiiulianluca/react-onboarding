@@ -12,15 +12,15 @@ $badge-gray: #71717a;
   font-size: 0.875rem;
   z-index: 10;
 
-  &.dead {
+  &.error {
     background-color: $badge-red;
   }
 
-  &.alive {
+  &.success {
     background-color: $badge-green;
   }
 
-  &.unknown {
+  &.default {
     background-color: $badge-gray;
   }
 }
