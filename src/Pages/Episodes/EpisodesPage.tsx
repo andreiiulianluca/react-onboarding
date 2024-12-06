@@ -39,7 +39,7 @@ const EpisodesPage = () => {
             <FilterSelect
               name="Episode"
               total={51}
-              action={handleEpisodeChange}
+              onFilterChange={handleEpisodeChange}
               value={selectedEpisode}
             />
           </div>

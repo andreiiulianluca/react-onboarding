@@ -46,7 +46,7 @@ const LocationsPage = () => {
             <FilterSelect
               name="Location"
               total={126}
-              action={handleLocationChange}
+              onFilterChange={handleLocationChange}
               value={selectedLocation}
             />
           </div>

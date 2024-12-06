@@ -5,15 +5,20 @@ interface FilterSelectProps {
   name: string;
   total: number;
   value: number;
-  action: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onFilterChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const FilterSelect = ({ name, total, value, action }: FilterSelectProps) => {
+const FilterSelect = ({
+  name,
+  total,
+  value,
+  onFilterChange,
+}: FilterSelectProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.selectWrapper}>
         <select
-          onChange={action}
+          onChange={onFilterChange}
           value={value}
           id="episode-select"
           className={styles.select}
