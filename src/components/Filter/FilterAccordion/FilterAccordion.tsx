@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { useSearchFilterContext } from "../../../contexts/SearchFilterContext";
 import { Filters } from "../../../types/types";
 import Button from "../../Button/Button";
+import Checkbox from "../../Checkbox/Checkbox";
 
 interface FilterAccordionProps {
   title: string;
@@ -24,7 +25,7 @@ const FilterAccordion = ({
     setIsOpen(!isOpen);
   };
 
-  const handleFilterOptionClick = (type: keyof Filters, title: string) => {
+  const handleFilterOptionChange = (type: keyof Filters, title: string) => {
     onFilterChange(type, title);
   };
 
@@ -43,13 +44,13 @@ const FilterAccordion = ({
         <div className={styles.accordionBody}>
           <div className={styles.filterOptions}>
             {(filterOptions[type] || []).map((title) => (
-              <Button
-                onClick={() => handleFilterOptionClick(type, title)}
-                isActive={filters[type] === title}
-                className={styles.filterOption}
-              >
-                {title}
-              </Button>
+              <Checkbox
+                key={title}
+                id={`${type}-${title}`}
+                label={title}
+                isChecked={filters[type] === title}
+                onChange={() => handleFilterOptionChange(type, title)}
+              />
             ))}
           </div>
         </div>
