@@ -3,11 +3,14 @@ import FilterSelect from "../../components/Filter/FilterSelect/FilterSelect";
 import { useEffect, useState } from "react";
 import { fetchCharactersPerLocation } from "../../store/slices/locations/thunk";
 import { AppDispatch, useAppSelector } from "../../store";
+import { LOCATIONS_TOTAL } from "../../utils/constants";
 import styles from "./LocationsPage.module.scss";
 import CardContainer from "../../components/CardContainer/CardContainer";
 import clsx from "clsx";
 import { getBadgeVariant } from "../../utils/helpers";
 import Card from "../../components/Card/Card";
+import PageHeader from "../../components/PageHeader/PageHeader";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 const LocationsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,32 +31,20 @@ const LocationsPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.row}>
-        <h1 className={styles["text-center"]}>
-          Location:{" "}
-          <span className={styles["text-primary"]}>
-            {location?.name || "Unknown"}
-          </span>
-        </h1>
-        <h5 className={styles["text-center"]}>
-          Dimension: {location?.dimension || "Unknown"}
-        </h5>
-        <h6 className={styles["text-center"]}>Type: {type || "Unknown"}</h6>
-      </div>
+      <PageHeader
+        title={`Location: ${location?.name || "Unknown"}`}
+        subtitle={`Dimension: ${location?.dimension || "Unknown"}`}
+        description={`Type: ${type || "Unknown"}`}
+      />
       <div className={styles.flex}>
-        <div className={styles.sidebar}>
-          <div className={styles.header}>
-            <h2>Choose location</h2>
-          </div>
-          <div className={styles.accordion}>
-            <FilterSelect
-              name="Location"
-              total={126}
-              onFilterChange={handleLocationChange}
-              value={selectedLocation}
-            />
-          </div>
-        </div>
+        <Sidebar title="Choose location">
+          <FilterSelect
+            name="Location"
+            total={LOCATIONS_TOTAL}
+            onFilterChange={handleLocationChange}
+            value={selectedLocation}
+          />
+        </Sidebar>
         <CardContainer>
           {characters
             ? characters.map((character) => (

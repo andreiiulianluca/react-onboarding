@@ -4,7 +4,7 @@ interface CheckboxProps {
   id: string;
   label: string;
   isChecked: boolean;
-  onChange: (isChecked: boolean) => void;
+  onChange: () => void;
 }
 
 const Checkbox = ({ id, label, isChecked, onChange }: CheckboxProps) => {
@@ -14,7 +14,7 @@ const Checkbox = ({ id, label, isChecked, onChange }: CheckboxProps) => {
         type="checkbox"
         id={id}
         checked={isChecked}
-        onChange={(e) => onChange(e.target.checked)}
+        onChange={onChange}
         className={styles.checkboxInput}
       />
       <label htmlFor={id} className={styles.checkboxLabel}>

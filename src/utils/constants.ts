@@ -52,4 +52,13 @@ const appCategories: {
   },
 ];
 
-export { filterOptions, filterCategories, appCategories };
+const EPISODES_TOTAL = 51;
+const LOCATIONS_TOTAL = 126;
+
+export {
+  filterOptions,
+  filterCategories,
+  appCategories,
+  EPISODES_TOTAL,
+  LOCATIONS_TOTAL,
+};
