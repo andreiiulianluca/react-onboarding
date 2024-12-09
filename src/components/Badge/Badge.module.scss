@@ -1,0 +1,26 @@
+$badge-red: #dc2626;
+$badge-green: #16a34a;
+$badge-gray: #71717a;
+
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  border-radius: 12px;
+  color: #ffff;
+  font-size: 0.875rem;
+  z-index: 10;
+
+  &.error {
+    background-color: $badge-red;
+  }
+
+  &.success {
+    background-color: $badge-green;
+  }
+
+  &.default {
+    background-color: $badge-gray;
+  }
+}

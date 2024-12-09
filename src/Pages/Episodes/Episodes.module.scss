@@ -1,0 +1,27 @@
+.container {
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 1200px;
+
+  .flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  .message {
+    margin: auto;
+    text-align: center;
+
+    &.loading {
+      margin-top: 1.25rem;
+      font-size: 1rem;
+    }
+
+    &.error {
+      margin-top: 1.25rem;
+      color: #dc2626;
+      font-size: 1rem;
+    }
+  }
+}
