@@ -3,8 +3,8 @@ import { filterOptions } from "../../../utils/constants";
 import styles from "./FilterAccordion.module.scss";
 import clsx from "clsx";
 import { useSearchFilterContext } from "../../../contexts/SearchFilterContext";
-import FilterOption from "../FilterOption/FilterOption";
 import { Filters } from "../../../types/types";
+import Button from "../../Button/Button";
 
 interface FilterAccordionProps {
   title: string;
@@ -24,18 +24,16 @@ const FilterAccordion = ({
     setIsOpen(!isOpen);
   };
 
+  const handleFilterOptionClick = (type: keyof Filters, title: string) => {
+    onFilterChange(type, title);
+  };
+
   return (
     <div className={styles.accordionItem}>
       <h2>
-        <button
-          className={styles.accordionHeader}
-          type="button"
-          onClick={toggleAccordion}
-          aria-expanded={isOpen}
-          aria-controls="collapseOne"
-        >
+        <Button className={styles.accordionHeader} onClick={toggleAccordion}>
           {title}
-        </button>
+        </Button>
       </h2>
       <div
         id="collapseOne"
@@ -44,14 +42,14 @@ const FilterAccordion = ({
       >
         <div className={styles.accordionBody}>
           <div className={styles.filterOptions}>
-            {(filterOptions[type] || []).map((title, index) => (
-              <FilterOption
-                key={index}
-                type={type}
-                isChecked={filters[type] === title}
-                title={title}
-                onFilterChange={onFilterChange}
-              />
+            {(filterOptions[type] || []).map((title) => (
+              <Button
+                onClick={() => handleFilterOptionClick(type, title)}
+                isActive={filters[type] === title}
+                className={styles.filterOption}
+              >
+                {title}
+              </Button>
             ))}
           </div>
         </div>
