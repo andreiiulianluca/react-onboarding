@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { fetchCharactersPerEpisode } from "../../store/slices/episodes/thunk";
 import FilterSelect from "../../components/Filter/FilterSelect/FilterSelect";
 import CardContainer from "../../components/CardContainer/CardContainer";
+import Card from "../../components/Card/Card";
+import { getBadgeVariant } from "../../utils/helpers";
+import clsx from "clsx";
 
 const EpisodesPage = () => {
   const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
@@ -44,13 +47,35 @@ const EpisodesPage = () => {
             />
           </div>
         </div>
-        <div className={styles.cardContainer}>
-          <CardContainer
-            characters={characters}
-            isLoading={isLoading}
-            error={error}
-          />
-        </div>
+        <CardContainer>
+          {characters
+            ? characters.map((character) => (
+                <Card
+                  key={character.id}
+                  id={character.id}
+                  image={character.image}
+                  title={character.name}
+                  badgeProps={{
+                    text: character.status,
+                    variant: getBadgeVariant(character.status),
+                  }}
+                  description={character.location.name}
+                />
+              ))
+            : !isLoading && (
+                <div className={styles.message}>No results found</div>
+              )}
+          {isLoading && (
+            <div className={clsx(styles.message, styles.loading)}>
+              Loading...
+            </div>
+          )}
+          {error && (
+            <div className={clsx(styles.message, styles.error)}>
+              Error: {error}
+            </div>
+          )}
+        </CardContainer>
       </div>
     </div>
   );

@@ -10,25 +10,19 @@ interface CardProps {
   badgeProps?: BadgeProps;
 }
 
-const Card = ({ id, image, title, description, badgeProps }: CardProps) => {
-  if (!id || !image || !title) {
-    return <div className={styles.noData}>No data available</div>;
-  }
-
-  return (
-    <Link to={`/${id}`} className={styles.card}>
-      <div className={styles.cardContent}>
-        {badgeProps && (
-          <Badge text={badgeProps.text} variant={badgeProps.variant} />
-        )}
-        <img src={image} alt={title} className={styles.img} />
-        <div className={styles.content}>
-          <p className={styles.contentTitle}>{title}</p>
-          <p>{description}</p>
-        </div>
+const Card = ({ id, image, title, description, badgeProps }: CardProps) => (
+  <Link to={`/${id}`} className={styles.card}>
+    <div className={styles.cardContent}>
+      {badgeProps && (
+        <Badge text={badgeProps.text} variant={badgeProps.variant} />
+      )}
+      <img src={image} alt={title} className={styles.img} />
+      <div className={styles.content}>
+        <p className={styles.contentTitle}>{title}</p>
+        <p>{description}</p>
       </div>
-    </Link>
-  );
-};
+    </div>
+  </Link>
+);
 
 export default Card;

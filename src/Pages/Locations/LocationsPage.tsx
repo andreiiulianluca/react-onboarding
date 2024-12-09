@@ -5,6 +5,9 @@ import { fetchCharactersPerLocation } from "../../store/slices/locations/thunk";
 import { AppDispatch, useAppSelector } from "../../store";
 import styles from "./LocationsPage.module.scss";
 import CardContainer from "../../components/CardContainer/CardContainer";
+import clsx from "clsx";
+import { getBadgeVariant } from "../../utils/helpers";
+import Card from "../../components/Card/Card";
 
 const LocationsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -51,13 +54,35 @@ const LocationsPage = () => {
             />
           </div>
         </div>
-        <div className={styles["card-container"]}>
-          <CardContainer
-            characters={characters}
-            isLoading={isLoading}
-            error={error}
-          />
-        </div>
+        <CardContainer>
+          {characters
+            ? characters.map((character) => (
+                <Card
+                  key={character.id}
+                  id={character.id}
+                  image={character.image}
+                  title={character.name}
+                  badgeProps={{
+                    text: character.status,
+                    variant: getBadgeVariant(character.status),
+                  }}
+                  description={character.location.name}
+                />
+              ))
+            : !isLoading && (
+                <div className={styles.message}>No results found</div>
+              )}
+          {isLoading && (
+            <div className={clsx(styles.message, styles.loading)}>
+              Loading...
+            </div>
+          )}
+          {error && (
+            <div className={clsx(styles.message, styles.error)}>
+              Error: {error}
+            </div>
+          )}
+        </CardContainer>
       </div>
     </div>
   );

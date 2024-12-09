@@ -31,7 +31,7 @@ const FilterAccordion = ({
           className={styles.accordionHeader}
           type="button"
           onClick={toggleAccordion}
-          aria-expanded={isOpen ? "true" : "false"}
+          aria-expanded={isOpen}
           aria-controls="collapseOne"
         >
           {title}

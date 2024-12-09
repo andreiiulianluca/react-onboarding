@@ -1,15 +1,15 @@
-.message {
-  margin: auto;
-  text-align: center;
+.containerGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  place-items: center;
 
-  &.loading {
-    margin-top: 1.25rem;
-    font-size: 1rem;
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  &.error {
-    margin-top: 1.25rem;
-    color: #dc2626;
-    font-size: 1rem;
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

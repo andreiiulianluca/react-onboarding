@@ -9,6 +9,9 @@ import styles from "./CharactersPage.module.scss";
 import Filter from "../../components/Filter/Filter";
 import useDebounce from "../../hooks/useDebounce";
 import CardContainer from "../../components/CardContainer/CardContainer";
+import Card from "../../components/Card/Card";
+import { getBadgeVariant } from "../../utils/helpers";
+import clsx from "clsx";
 
 const CharactersPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -82,13 +85,33 @@ const CharactersPage = () => {
         onFilterChange={handleFilterChange}
         onResetFilters={handleResetFilters}
       />
-      <div className={styles.charactersGrid}>
-        <CardContainer
-          characters={characters}
-          isLoading={isLoading}
-          error={error}
-        />
-      </div>
+      <CardContainer>
+        {characters
+          ? characters.map((character) => (
+              <Card
+                key={character.id}
+                id={character.id}
+                image={character.image}
+                title={character.name}
+                badgeProps={{
+                  text: character.status,
+                  variant: getBadgeVariant(character.status),
+                }}
+                description={character.location.name}
+              />
+            ))
+          : !isLoading && (
+              <div className={styles.message}>No results found</div>
+            )}
+        {isLoading && (
+          <div className={clsx(styles.message, styles.loading)}>Loading...</div>
+        )}
+        {error && (
+          <div className={clsx(styles.message, styles.error)}>
+            Error: {error}
+          </div>
+        )}
+      </CardContainer>
     </div>
   );
 };
