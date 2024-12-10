@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCharacters } from "./thunk";
+import { fetchCharacters, fetchMoreCharacters } from "./thunk";
 import { Character } from "../../../types/types";
 
 export type FetchedCharacters = {
@@ -29,11 +29,7 @@ const initialState: CharactersState = {
 const charactersSlice = createSlice({
   name: "characters",
   initialState,
-  reducers: {
-    incrementPageNumber(state) {
-      state.pageNumber += 1;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCharacters.pending, (state) => {
@@ -43,23 +39,32 @@ const charactersSlice = createSlice({
       .addCase(fetchCharacters.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = "";
-
-        if (action.meta.arg.pageNumber === 1) {
-          state.characters = action.payload.results;
-        } else {
-          state.characters = state.characters
-            ? [...state.characters, ...action.payload.results]
-            : action.payload.results;
-        }
-
+        state.characters = action.payload.results;
         state.info = action.payload.info;
       })
       .addCase(fetchCharacters.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Something went wrong";
+      })
+      .addCase(fetchMoreCharacters.pending, (state) => {
+        state.isLoading = true;
+        state.error = "";
+      })
+      .addCase(fetchMoreCharacters.fulfilled, (state, action) => {
+        state.isLoading = false;
+
+        state.characters = state.characters
+          ? [...state.characters, ...action.payload.results]
+          : action.payload.results;
+
+        state.info = action.payload.info;
+        state.pageNumber += 1;
+      })
+      .addCase(fetchMoreCharacters.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       });
   },
 });
 
-export const { incrementPageNumber } = charactersSlice.actions;
 export default charactersSlice.reducer;

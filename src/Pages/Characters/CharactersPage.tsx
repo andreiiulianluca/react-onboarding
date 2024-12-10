@@ -1,8 +1,10 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchCharacters } from "../../store/slices/characters/thunk";
+import {
+  fetchCharacters,
+  fetchMoreCharacters,
+} from "../../store/slices/characters/thunk";
 import { useSearchFilterContext } from "../../contexts/SearchFilterContext";
-import { incrementPageNumber } from "../../store/slices/characters/slice";
 import { AppDispatch, useAppSelector } from "../../store";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import styles from "./CharactersPage.module.scss";
@@ -16,16 +18,14 @@ import clsx from "clsx";
 const CharactersPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { searchTerm, filters, setFilter } = useSearchFilterContext();
-  const { characters, pageNumber, isLoading, info, error } = useAppSelector(
+  const { characters, pageNumber, isLoading, error } = useAppSelector(
     (state) => state.characters
   );
-  const hasMore = Boolean(info?.next);
 
   const debouncedFetchCharacters = useDebounce(
     (searchTerm: string, filters: any) => {
       dispatch(
         fetchCharacters({
-          pageNumber: 1,
           searchTerm,
           filters,
         })
@@ -39,16 +39,13 @@ const CharactersPage = () => {
   }, [searchTerm, filters]);
 
   const loadMore = useCallback(() => {
-    if (!hasMore) return;
-    dispatch(incrementPageNumber());
     dispatch(
-      fetchCharacters({
-        pageNumber: pageNumber + 1,
+      fetchMoreCharacters({
         searchTerm,
         filters,
       })
     );
-  }, [hasMore, pageNumber, searchTerm, filters, dispatch]);
+  }, [pageNumber, searchTerm, filters, dispatch]);
 
   const handleResetFilters = () => {
     setFilter({
@@ -58,7 +55,6 @@ const CharactersPage = () => {
     });
     dispatch(
       fetchCharacters({
-        pageNumber: 1,
         searchTerm: searchTerm,
         filters: { gender: "", species: "", status: "" },
       })
@@ -70,14 +66,13 @@ const CharactersPage = () => {
     setFilter(updatedFilters);
     dispatch(
       fetchCharacters({
-        pageNumber: 1,
         searchTerm,
         filters: updatedFilters,
       })
     );
   };
 
-  useInfiniteScroll({ isLoading, onLoadMore: loadMore, hasMore });
+  useInfiniteScroll({ isLoading, onLoadMore: loadMore });
 
   return (
     <div className={styles.container}>
@@ -107,9 +102,7 @@ const CharactersPage = () => {
           <div className={clsx(styles.message, styles.loading)}>Loading...</div>
         )}
         {error && (
-          <div className={clsx(styles.message, styles.error)}>
-            Error: {error}
-          </div>
+          <div className={clsx(styles.message, styles.error)}>{error}</div>
         )}
       </CardContainer>
     </div>

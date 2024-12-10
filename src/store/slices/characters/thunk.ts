@@ -1,10 +1,10 @@
 import api from "../../../services/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { FetchedCharacters } from "./slice";
+import { CharactersState, FetchedCharacters } from "./slice";
 
 type FetchCharactersParams = {
-  pageNumber: number;
   searchTerm: string;
+  pageNumber?: number;
   filters: {
     gender?: string;
     species?: string;
@@ -12,14 +12,14 @@ type FetchCharactersParams = {
   };
 };
 
-export const fetchCharacters = createAsyncThunk<
+const fetchCharacters = createAsyncThunk<
   FetchedCharacters,
   FetchCharactersParams
->("characters/fetchCharacters", async ({ pageNumber, searchTerm, filters }) => {
+>("characters/fetchCharacters", async ({ searchTerm, filters }) => {
   const { status, gender, species } = filters;
 
   const params = {
-    page: pageNumber,
+    page: 1,
     name: searchTerm,
     status,
     gender,
@@ -29,3 +29,31 @@ export const fetchCharacters = createAsyncThunk<
   const response = await api.get<FetchedCharacters>("character/", { params });
   return response.data;
 });
+
+const fetchMoreCharacters = createAsyncThunk<
+  FetchedCharacters,
+  FetchCharactersParams,
+  { state: { characters: CharactersState } }
+>(
+  "characters/fetchMoreCharacters",
+  async ({ searchTerm, filters }, { getState, rejectWithValue }) => {
+    const { pageNumber, info } = getState().characters;
+
+    if (!info?.next) {
+      return rejectWithValue("No more characters to load.");
+    }
+
+    const params = {
+      page: pageNumber + 1,
+      name: searchTerm,
+      ...filters,
+    };
+
+    const response = await api.get<FetchedCharacters>("character/", {
+      params,
+    });
+    return response.data;
+  }
+);
+
+export { fetchCharacters, fetchMoreCharacters };
