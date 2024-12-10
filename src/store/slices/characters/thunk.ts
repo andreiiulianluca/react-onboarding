@@ -18,10 +18,14 @@ export const fetchCharacters = createAsyncThunk<
 >("characters/fetchCharacters", async ({ pageNumber, searchTerm, filters }) => {
   const { status, gender, species } = filters;
 
-  const url = `character/?page=${pageNumber}&name=${searchTerm}&status=${
-    status || ""
-  }&gender=${gender || ""}&species=${species || ""}`;
+  const params = {
+    page: pageNumber,
+    name: searchTerm,
+    status,
+    gender,
+    species,
+  };
 
-  const response = await api.get<FetchedCharacters>(url);
+  const response = await api.get<FetchedCharacters>("character/", { params });
   return response.data;
 });

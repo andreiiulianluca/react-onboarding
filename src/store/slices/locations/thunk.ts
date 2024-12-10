@@ -8,7 +8,11 @@ export const fetchCharactersPerLocation = createAsyncThunk<
 >("location/fetchCharactersPerLocation", async (locationId) => {
   const { data: locationData } = await api.get(`location/${locationId}`);
 
-  const residents = await api.get(`character/?location=${locationId}`);
+  const residents = await api.get("character", {
+    params: {
+      location: locationId,
+    },
+  });
 
   return {
     info: {

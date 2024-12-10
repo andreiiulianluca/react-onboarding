@@ -8,7 +8,11 @@ export const fetchCharactersPerEpisode = createAsyncThunk<
 >("episode/fetchCharactersPerEpisode", async (episodeId) => {
   const { data: episodeData } = await api.get(`episode/${episodeId}`);
 
-  const characters = await api.get(`character/?episode=${episodeId}`);
+  const characters = await api.get("character", {
+    params: {
+      episode: episodeId,
+    },
+  });
 
   return {
     name: episodeData.name,
