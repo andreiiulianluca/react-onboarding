@@ -33,7 +33,7 @@ const EpisodesPage = () => {
         title={`Episode name: ${name || "Unknown"}`}
         subtitle={`Air Date: ${airDate || "Unknown"}`}
       />
-      <div className={styles.flex}>
+      <div className={styles.content}>
         <Sidebar title="Pick an episode">
           <FilterSelect
             name="Episode"

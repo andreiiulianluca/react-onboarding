@@ -36,7 +36,7 @@ const LocationsPage = () => {
         subtitle={`Dimension: ${location?.dimension || "Unknown"}`}
         description={`Type: ${type || "Unknown"}`}
       />
-      <div className={styles.flex}>
+      <div className={styles.content}>
         <Sidebar title="Choose location">
           <FilterSelect
             name="Location"

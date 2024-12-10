@@ -23,18 +23,18 @@ const CharacterDetails = () => {
   }, [dispatch, id]);
 
   if (isLoading) {
-    return <div className={styles.loadingText}>Loading...</div>;
+    return <div className={styles.loading}>Loading...</div>;
   }
 
   if (error) {
-    return <div className={styles.errorText}>Error: {error}</div>;
+    return <div className={styles.error}>Error: {error}</div>;
   }
 
   return (
-    <div className={styles.characterDetailsContainer}>
-      <div className={styles.characterDetailsContent}>
-        <h1 className={styles.characterName}>{name}</h1>
-        <img className={styles.characterImage} src={image} alt={name} />
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <h1 className={styles.name}>{name}</h1>
+        <img className={styles.image} src={image} alt={name} />
         <div className={styles.detailsContent}>
           <div className={styles.detailItem}>
             <span className={styles.detailLabel}>Gender: </span>

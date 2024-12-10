@@ -14,9 +14,9 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   return (
     <div className={styles.container}>
-      <h1 className={styles.textPrimary}>{title}</h1>
-      {subtitle && <h5 className={styles.textCenter}>{subtitle}</h5>}
-      {description && <h6 className={styles.textCenter}>{description}</h6>}
+      <h1 className={styles.title}>{title}</h1>
+      {subtitle && <h5 className={styles.subTitle}>{subtitle}</h5>}
+      {description && <h6 className={styles.description}>{description}</h6>}
     </div>
   );
 };
