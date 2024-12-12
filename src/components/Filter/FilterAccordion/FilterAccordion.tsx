@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { useSearchFilterContext } from "../../../contexts/SearchFilterContext";
 import { Filters } from "../../../types/types";
 import Button from "../../Button/Button";
-import Checkbox from "../../Checkbox/Checkbox";
+import RadioButton from "../../Button/RadioButton/RadioButton";
 
 interface FilterAccordionProps {
   title: string;
@@ -42,17 +42,15 @@ const FilterAccordion = ({
         aria-labelledby="headingOne"
       >
         <div className={styles.accordionBody}>
-          <div className={styles.filterOptions}>
-            {(filterOptions[type] || []).map((title) => (
-              <Checkbox
-                key={title}
-                id={`${type}-${title}`}
-                label={title}
-                isChecked={filters[type] === title}
-                onChange={() => handleFilterOptionChange(type, title)}
-              />
-            ))}
-          </div>
+          {(filterOptions[type] || []).map((option) => (
+            <RadioButton
+              key={option}
+              id={`${type}-${option}`}
+              label={option}
+              isChecked={filters[type] === option}
+              onChange={() => handleFilterOptionChange(type, option)}
+            />
+          ))}
         </div>
       </div>
     </div>

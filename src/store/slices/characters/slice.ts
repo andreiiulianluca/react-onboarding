@@ -22,7 +22,7 @@ export type CharactersState = {
 
 const initialState: CharactersState = {
   isLoading: false,
-  error: "",
+  error: undefined,
   pageNumber: 1,
 };
 
@@ -34,21 +34,22 @@ const charactersSlice = createSlice({
     builder
       .addCase(fetchCharacters.pending, (state) => {
         state.isLoading = true;
-        state.error = "";
+        state.error = undefined;
       })
       .addCase(fetchCharacters.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.error = "";
+        state.error = undefined;
         state.characters = action.payload.results;
         state.info = action.payload.info;
       })
       .addCase(fetchCharacters.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message || "Something went wrong";
+        state.error = (action.payload as string) || "Something went wrong";
+        state.characters = [];
       })
       .addCase(fetchMoreCharacters.pending, (state) => {
         state.isLoading = true;
-        state.error = "";
+        state.error = undefined;
       })
       .addCase(fetchMoreCharacters.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -62,7 +63,7 @@ const charactersSlice = createSlice({
       })
       .addCase(fetchMoreCharacters.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
+        state.error = (action.payload as string) || "Something went wrong";
       });
   },
 });

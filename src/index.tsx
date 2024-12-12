@@ -16,40 +16,51 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <App />,
+      errorElement: <h1>Oops! Something went wrong...</h1>,
+      children: [
+        {
+          path: "/",
+          element: <CharactersPage />,
+        },
+        { path: "/characters", element: <CharactersPage /> },
+        { path: "/:id", element: <CharacterDetails /> },
+        {
+          path: "episode",
+          element: <Episodes />,
+        },
+        { path: "episode/:id", element: <CharacterDetails /> },
+        {
+          path: "location",
+          element: <LocationsPage />,
+        },
+        { path: "location/:id", element: <CharacterDetails /> },
+        {
+          path: "*",
+          element: <NotFound />,
+        },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <App />,
-    errorElement: <h1>Oops! Something went wrong...</h1>,
-    children: [
-      {
-        path: "/",
-        element: <CharactersPage />,
-      },
-      { path: "/characters", element: <CharactersPage /> },
-      { path: "/:id", element: <CharacterDetails /> },
-      {
-        path: "episode",
-        element: <Episodes />,
-      },
-      { path: "episode/:id", element: <CharacterDetails /> },
-      {
-        path: "location",
-        element: <LocationsPage />,
-      },
-      { path: "location/:id", element: <CharacterDetails /> },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
-    ],
-  },
-]);
+    future: {
+      v7_fetcherPersist: true,
+      v7_relativeSplatPath: true,
+      v7_partialHydration: true,
+      v7_skipActionErrorRevalidation: true,
+      v7_normalizeFormMethod: true,
+    },
+  }
+);
 
 root.render(
   <Provider store={store}>
     <SearchFilterProvider>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} future={{ v7_startTransition: true }} />;
     </SearchFilterProvider>
   </Provider>
 );

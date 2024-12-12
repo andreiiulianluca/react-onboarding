@@ -15,20 +15,31 @@ type FetchCharactersParams = {
 const fetchCharacters = createAsyncThunk<
   FetchedCharacters,
   FetchCharactersParams
->("characters/fetchCharacters", async ({ searchTerm, filters }) => {
-  const { status, gender, species } = filters;
+>(
+  "characters/fetchCharacters",
+  async ({ searchTerm, filters }, { rejectWithValue }) => {
+    const { status, gender, species } = filters;
 
-  const params = {
-    page: 1,
-    name: searchTerm,
-    status,
-    gender,
-    species,
-  };
+    const params = {
+      page: 1,
+      name: searchTerm,
+      status,
+      gender,
+      species,
+    };
 
-  const response = await api.get<FetchedCharacters>("character/", { params });
-  return response.data;
-});
+    try {
+      const response = await api.get<FetchedCharacters>("character/", {
+        params,
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        "There are no characters matching your search or filters."
+      );
+    }
+  }
+);
 
 const fetchMoreCharacters = createAsyncThunk<
   FetchedCharacters,
@@ -39,20 +50,25 @@ const fetchMoreCharacters = createAsyncThunk<
   async ({ searchTerm, filters }, { getState, rejectWithValue }) => {
     const { pageNumber, info } = getState().characters;
 
-    if (!info?.next) {
-      return rejectWithValue("No more characters to load.");
-    }
-
     const params = {
       page: pageNumber + 1,
       name: searchTerm,
       ...filters,
     };
 
-    const response = await api.get<FetchedCharacters>("character/", {
-      params,
-    });
-    return response.data;
+    try {
+      const response = await api.get<FetchedCharacters>("character/", {
+        params,
+      });
+      return response.data;
+    } catch (error) {
+      if (!info?.next) {
+        return rejectWithValue("No more characters to load.");
+      }
+      return rejectWithValue(
+        "There are no characters matching your search or filters."
+      );
+    }
   }
 );
 

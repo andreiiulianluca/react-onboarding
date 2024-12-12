@@ -3,7 +3,7 @@
   grid-template-columns: 1fr;
   gap: 1rem;
   margin-top: 1.5rem;
-  place-items: center;
+  place-items: start;
 
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr);

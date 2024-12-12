@@ -25,7 +25,7 @@ const Header = ({
           to="/"
           className={({ isActive }) => (isActive ? styles.active : undefined)}
         >
-          Characters
+          Rick & Morty
         </NavLink>
       </h1>
       {headerHasSearchBar && (
@@ -39,8 +39,9 @@ const Header = ({
         </div>
       )}
       <div className={styles.links}>
-        {appCategories.map((category) => (
+        {appCategories.map((category, index) => (
           <NavLink
+            key={index}
             to={category.title}
             className={({ isActive }) => (isActive ? styles.active : undefined)}
           >

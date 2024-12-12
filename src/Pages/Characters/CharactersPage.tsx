@@ -76,35 +76,41 @@ const CharactersPage = () => {
 
   return (
     <div className={styles.container}>
-      <Filter
-        onFilterChange={handleFilterChange}
-        onResetFilters={handleResetFilters}
-      />
-      <CardContainer>
-        {characters
-          ? characters.map((character) => (
-              <Card
-                key={character.id}
-                id={character.id}
-                image={character.image}
-                title={character.name}
-                badgeProps={{
-                  text: character.status,
-                  variant: getBadgeVariant(character.status),
-                }}
-                description={character.location.name}
-              />
-            ))
-          : !isLoading && (
-              <div className={styles.message}>No results found</div>
-            )}
-        {isLoading && (
-          <div className={clsx(styles.message, styles.loading)}>Loading...</div>
-        )}
-        {error && (
-          <div className={clsx(styles.message, styles.error)}>{error}</div>
-        )}
-      </CardContainer>
+      <div className={styles.filter}>
+        <Filter
+          onFilterChange={handleFilterChange}
+          onResetFilters={handleResetFilters}
+        />
+      </div>
+      <div className={styles.cardContainer}>
+        <CardContainer>
+          {characters
+            ? characters.map((character) => (
+                <Card
+                  key={character.id}
+                  id={character.id}
+                  image={character.image}
+                  title={character.name}
+                  badgeProps={{
+                    text: character.status,
+                    variant: getBadgeVariant(character.status),
+                  }}
+                  description={character.location.name}
+                />
+              ))
+            : !isLoading && (
+                <div className={styles.message}>No results found</div>
+              )}
+          {isLoading && (
+            <div className={clsx(styles.message, styles.loading)}>
+              Loading...
+            </div>
+          )}
+          {error && (
+            <div className={clsx(styles.message, styles.error)}>{error}</div>
+          )}
+        </CardContainer>
+      </div>
     </div>
   );
 };

@@ -7,7 +7,7 @@ const App = () => {
   const { searchTerm, setSearchTerm } = useSearchFilterContext();
   const headerHasSearchBar =
     currentLocation.pathname === "/" ||
-    currentLocation.pathname === "/characters";
+    currentLocation.pathname === "/Characters";
 
   return (
     <>

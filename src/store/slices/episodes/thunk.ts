@@ -8,15 +8,15 @@ export const fetchCharactersPerEpisode = createAsyncThunk<
 >("episode/fetchCharactersPerEpisode", async (episodeId) => {
   const { data: episodeData } = await api.get(`episode/${episodeId}`);
 
-  const characters = await api.get("character", {
-    params: {
-      episode: episodeId,
-    },
-  });
+  const characters = await Promise.all(
+    episodeData.characters.map((characterUrl: string) => api.get(characterUrl))
+  );
+
+  const charactersData = characters.map((character) => character.data);
 
   return {
     name: episodeData.name,
     airDate: episodeData.air_date,
-    characters: characters.data.results,
+    characters: charactersData,
   };
 });
