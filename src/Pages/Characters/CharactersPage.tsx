@@ -72,7 +72,14 @@ const CharactersPage = () => {
     );
   };
 
-  useInfiniteScroll({ isLoading, onLoadMore: loadMore });
+  useInfiniteScroll({
+    isLoading,
+    onLoadMore: () => {
+      if (characters && characters.length >= 18) {
+        loadMore();
+      }
+    },
+  });
 
   return (
     <div className={styles.container}>

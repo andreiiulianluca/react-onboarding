@@ -50,6 +50,10 @@ const fetchMoreCharacters = createAsyncThunk<
   async ({ searchTerm, filters }, { getState, rejectWithValue }) => {
     const { pageNumber, info } = getState().characters;
 
+    if (!info?.next) {
+      return rejectWithValue("No more characters to load.");
+    }
+
     const params = {
       page: pageNumber + 1,
       name: searchTerm,
@@ -62,9 +66,6 @@ const fetchMoreCharacters = createAsyncThunk<
       });
       return response.data;
     } catch (error) {
-      if (!info?.next) {
-        return rejectWithValue("No more characters to load.");
-      }
       return rejectWithValue(
         "There are no characters matching your search or filters."
       );
