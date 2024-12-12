@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  gap: 1rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 1200px;
+
+  .cardContainer {
+    align-self: flex-start;
+
+    .message {
+      text-align: center;
+
+      &.loading {
+        margin-top: 1.25rem;
+        font-size: 1rem;
+      }
+
+      &.error {
+        margin-top: 1.25rem;
+        color: #dc2626;
+        font-size: 1rem;
+      }
+    }
+  }
+}

@@ -1,22 +1,24 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import Card from "./componentes/Card/Card";
-import Navbar from "./componentes/Navbar/Navbar";
-import InfiniteScroll from "./componentes/InfiniteScroll/InfiniteScroll";
+import { Outlet, useLocation } from "react-router-dom";
+import Header from "./components/Header/Header";
+import { useSearchFilterContext } from "./contexts/SearchFilterContext";
 
-function App() {
-  const [pageNumber, setPageNumber] = useState<Number>(1);
-  const [searchValue, setSearchValue] = useState<String>("");
+const App = () => {
+  const currentLocation = useLocation();
+  const { searchTerm, setSearchTerm } = useSearchFilterContext();
+  const headerHasSearchBar =
+    currentLocation.pathname === "/" ||
+    currentLocation.pathname === "/Characters";
 
   return (
-    <div className="App">
-      <Navbar setSearch={setSearchValue} updatePageNumber={setPageNumber} />
-      <div className="flex container mx-auto px-4">
-        <p>Filter component will be placed here</p>
-        <InfiniteScroll />
-      </div>
-    </div>
+    <>
+      <Header
+        searchInputValue={searchTerm}
+        onSearchInputChange={setSearchTerm}
+        headerHasSearchBar={headerHasSearchBar}
+      />
+      <Outlet />
+    </>
   );
-}
+};
 
 export default App;
