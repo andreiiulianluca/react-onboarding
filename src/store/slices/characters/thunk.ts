@@ -28,16 +28,11 @@ const fetchCharacters = createAsyncThunk<
       species,
     };
 
-    try {
-      const response = await api.get<FetchedCharacters>("character/", {
-        params,
-      });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(
-        "There are no characters matching your search or filters."
-      );
-    }
+    const response = await api.get<FetchedCharacters>("character/", {
+      params,
+    });
+
+    return response.data;
   }
 );
 
@@ -48,11 +43,7 @@ const fetchMoreCharacters = createAsyncThunk<
 >(
   "characters/fetchMoreCharacters",
   async ({ searchTerm, filters }, { getState, rejectWithValue }) => {
-    const { pageNumber, info } = getState().characters;
-
-    if (!info?.next) {
-      return rejectWithValue("No more characters to load.");
-    }
+    const { pageNumber } = getState().characters;
 
     const params = {
       page: pageNumber + 1,
@@ -60,16 +51,10 @@ const fetchMoreCharacters = createAsyncThunk<
       ...filters,
     };
 
-    try {
-      const response = await api.get<FetchedCharacters>("character/", {
-        params,
-      });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(
-        "There are no characters matching your search or filters."
-      );
-    }
+    const response = await api.get<FetchedCharacters>("character/", {
+      params,
+    });
+    return response.data;
   }
 );
 

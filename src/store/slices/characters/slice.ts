@@ -41,6 +41,7 @@ const charactersSlice = createSlice({
         state.error = undefined;
         state.characters = action.payload.results;
         state.info = action.payload.info;
+        state.pageNumber = 1;
       })
       .addCase(fetchCharacters.rejected, (state, action) => {
         state.isLoading = false;
