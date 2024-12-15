@@ -11,6 +11,7 @@ import { getBadgeVariant } from "../../utils/helpers";
 import Card from "../../components/Card/Card";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import NoResults from "../NoResults/NoResults";
 
 const LocationsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -29,6 +30,8 @@ const LocationsPage = () => {
     setSelectedLocation(Number(event.target.value));
   };
 
+  console.log("characters", characters);
+
   return (
     <div className={styles.container}>
       <PageHeader
@@ -46,23 +49,20 @@ const LocationsPage = () => {
           />
         </Sidebar>
         <CardContainer>
-          {characters
-            ? characters.map((character) => (
-                <Card
-                  key={character.id}
-                  id={character.id}
-                  image={character.image}
-                  title={character.name}
-                  badgeProps={{
-                    text: character.status,
-                    variant: getBadgeVariant(character.status),
-                  }}
-                  description={character.location.name}
-                />
-              ))
-            : !isLoading && (
-                <div className={styles.message}>No results found</div>
-              )}
+          {characters &&
+            characters.map((character) => (
+              <Card
+                key={character.id}
+                id={character.id}
+                image={character.image}
+                title={character.name}
+                badgeProps={{
+                  text: character.status,
+                  variant: getBadgeVariant(character.status),
+                }}
+                description={character.location.name}
+              />
+            ))}
           {isLoading && (
             <div className={clsx(styles.message, styles.loading)}>
               Loading...
@@ -74,6 +74,14 @@ const LocationsPage = () => {
             </div>
           )}
         </CardContainer>
+        {characters?.length === 0 && !isLoading && (
+          <div className={styles.noResults}>
+            <NoResults
+              title="No Results Found"
+              description="There are no characters for this location."
+            />
+          </div>
+        )}
       </div>
     </div>
   );

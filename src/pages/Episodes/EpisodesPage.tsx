@@ -11,6 +11,7 @@ import { getBadgeVariant } from "../../utils/helpers";
 import clsx from "clsx";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import NoResults from "../NoResults/NoResults";
 
 const EpisodesPage = () => {
   const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
@@ -43,23 +44,20 @@ const EpisodesPage = () => {
           />
         </Sidebar>
         <CardContainer>
-          {characters
-            ? characters.map((character) => (
-                <Card
-                  key={character.id}
-                  id={character.id}
-                  image={character.image}
-                  title={character.name}
-                  badgeProps={{
-                    text: character.status,
-                    variant: getBadgeVariant(character.status),
-                  }}
-                  description={character.location.name}
-                />
-              ))
-            : !isLoading && (
-                <div className={styles.message}>No results found</div>
-              )}
+          {characters &&
+            characters.map((character) => (
+              <Card
+                key={character.id}
+                id={character.id}
+                image={character.image}
+                title={character.name}
+                badgeProps={{
+                  text: character.status,
+                  variant: getBadgeVariant(character.status),
+                }}
+                description={character.location.name}
+              />
+            ))}
           {isLoading && (
             <div className={clsx(styles.message, styles.loading)}>
               Loading...
@@ -71,6 +69,14 @@ const EpisodesPage = () => {
             </div>
           )}
         </CardContainer>
+        {characters?.length === 0 && !isLoading && (
+          <div className={styles.noResults}>
+            <NoResults
+              title="No Results Found"
+              description="There are no characters for this episode."
+            />
+          </div>
+        )}
       </div>
     </div>
   );

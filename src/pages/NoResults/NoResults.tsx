@@ -1,10 +1,15 @@
 import styles from "./NoResults.module.scss";
 
-const NoResults = () => {
+interface NoResultsProps {
+  title: string;
+  description?: string;
+}
+
+const NoResults = ({ title, description }: NoResultsProps) => {
   return (
     <div className={styles.noResults}>
-      <h2>No Results Found</h2>
-      <p>Try adjusting your search or filter criteria.</p>
+      <h2>{title}</h2>
+      <p>{description}</p>
     </div>
   );
 };

@@ -119,7 +119,10 @@ const CharactersPage = () => {
       </div>
       {characters === null && !isLoading && (
         <div className={styles.noResults}>
-          <NoResults />
+          <NoResults
+            title="No Results Found"
+            description="Try adjusting your search or filter criteria."
+          />
         </div>
       )}
     </div>
